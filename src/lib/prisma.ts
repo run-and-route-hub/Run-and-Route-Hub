@@ -13,7 +13,7 @@ export const prisma =
   // eslint-disable-next-line operator-linebreak
   globalForPrisma.prisma ||
   new PrismaClient({
-    log: ['query'], // CAM: is this the right level of logging?
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'], // changed for better logging
   });
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

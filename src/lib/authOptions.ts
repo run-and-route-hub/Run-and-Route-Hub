@@ -23,25 +23,23 @@ const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) {
           return null;
         }
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-        if (!user) {
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+          });
+          if (!user) return null;
+
+          const good = await compare(credentials.password, user.password);
+          if (!good) return null;
+
+          return {
+            id: String(user.id),
+            email: user.email,
+            role: user.role,
+          };
+        } catch {
           return null;
         }
-
-        const isPasswordValid = await compare(credentials.password, user.password);
-        if (!isPasswordValid) {
-          return null;
-        }
-
-        return {
-          id: `${user.id}`,
-          email: user.email,
-          randomKey: user.role,
-        };
       },
     }),
   ],
@@ -59,19 +57,19 @@ const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          id: token.id,
-          randomKey: token.randomKey,
+          id: token.id as string | undefined,
+          role: token.role as string | undefined,
         },
       };
     },
     jwt: ({ token, user }) => {
       // console.log('JWT Callback', { token, user })
       if (user) {
-        const u = user as unknown as any;
+        const u = user as { id: string; role?: string };
         return {
           ...token,
           id: u.id,
-          randomKey: u.randomKey,
+          role: u.role,
         };
       }
       return token;
