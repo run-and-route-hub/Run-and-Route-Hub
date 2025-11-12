@@ -3,8 +3,9 @@ export { default } from 'next-auth/middleware';
 
 export const config = {
   matcher: [
-    '/list/:path*',
+    '/list', // protect /list
+    '/list/:path*', // protect any subpaths just in case
+    '/add',
     '/routes/:path*',
-    '/dashboard/:path*',
   ],
 };

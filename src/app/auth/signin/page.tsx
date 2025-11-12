@@ -18,7 +18,7 @@ const SignIn = () => {
       email,
       password,
       redirect: false, // to inspect whether user got directed to the next page
-      callbackUrl: '/list',
+      callbackUrl: '/',
     });
 
     if (result?.error) {
