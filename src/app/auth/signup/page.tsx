@@ -37,10 +37,16 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: SignUpForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    await createUser(data);
-    // After creating, signIn with redirect to the add page
-    await signIn('credentials', { callbackUrl: '/add', ...data });
+    try {
+      // console.log(JSON.stringify(data, null, 2));
+      await createUser(data);
+      // After creating, signIn with redirect to the add page
+      await signIn('credentials', { callbackUrl: '/add', ...data });
+    } catch (err: any) {
+      // return alert
+      // eslint-disable-next-line no-alert
+      alert(err?.message ?? 'Sign up failed');
+    }
   };
 
   return (
