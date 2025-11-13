@@ -1,4 +1,13 @@
+:root {
+  --nat-navbar-bg: gray;
+  --nat-navbar-bg-darkblue: gray;
+  --nat-navbar-bg-rgb: 128, 128, 128;
+  --nat-navbar-text-color: black; 
+  --nat-navbar-highlight-text: white;
+}
+
 html,
+
 body {
   --bs-light-rgb: 236, 236, 236;
   box-sizing: border-box;
@@ -6,9 +15,34 @@ body {
   padding: 0;
   margin: 0;
 }
+
+body .navbar {
+  --bs-navbar-active-color: var(--nat-navbar-highlight-text);
+  --bs-navbar-brand-color: var(--nat-navbar-text-color);
+  --bs-navbar-brand-hover-color: var(--nat-navbar-highlight-text);
+  --bs-navbar-color: var(--nat-navbar-text-color);
+  --bs-navbar-hover-color: var(--nat-navbar-highlight-text);
+}
+
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.custom-navbar {
+  background-color: var(--nat-navbar-bg) !important;
+  color: var(--nat-navbar-text-color);
+} 
+
+.custom-navbar .nav-link {
+  position: relative;
+  color: var(--nat-navbar-text-color);
+}
+
+/* Add a divider to every link except the first one */
+.custom-navbar .nav-link:not(:first-child) {
+  border-left: 2px solid #000000;
+  padding-left: 0.75rem;
 }

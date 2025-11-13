@@ -14,7 +14,7 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="custom-navbar" expand="lg">
       <Container>
         <Navbar.Brand href="/">Run & Route Hub</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -22,12 +22,30 @@ const NavBar: React.FC = () => {
           <Nav className="me-auto justify-content-start">
             {currentUser
               ? [
-                  /* <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Add Stuff
+                  <Nav.Link
+                    id="add-run-nav"
+                    href="/add"
+                    key="add"
+                    active={pathName === '/add'}
+                  >
+                    Add Run
                   </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    List Stuff
-                  </Nav.Link>, */
+                  <Nav.Link
+                    id="list-run-nav"
+                    href="/list"
+                    key="list"
+                    active={pathName === '/list'}
+                  >
+                    Find Run
+                  </Nav.Link>,
+                  <Nav.Link
+                    id="find-buddy-nav"
+                    href="/findbuddy"
+                    key="findbuddy"
+                    active={pathName === '/findbuddy'}
+                  >
+                    Find Running Buddy
+                  </Nav.Link>,
                 ]
               : ''}
             {currentUser && role === 'ADMIN' ? (
