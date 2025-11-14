@@ -33,25 +33,24 @@ enum Role {
   ADMIN
 }
 
-model Route {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name       String
-  description String?
-  distance  Float
-  path       Json?
-  runLogs     RunLog[]
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  role     Role   @default(USER)
 }
 
-model RunLog {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  routeId    Int?
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  route      Route?   @relation(fields: [routeId], references: [id], onDelete: SetNull)
-  durationMin Int
-  avgPace     Float?
-  calories    Int?
-  notes       String?
+enum Condition {
+  excellent
+  good
+  fair
+  poor
+}
+
+model Stuff {
+  id        Int       @id @default(autoincrement())
+  name      String
+  quantity  Int
+  condition Condition @default(good)
+  owner     String
 }
