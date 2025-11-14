@@ -1,3 +1,4 @@
+/*
 import { PrismaClient, Role, Condition } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
@@ -43,4 +44,45 @@ main()
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
+  });
+*/
+
+import { PrismaClient, Role } from '@prisma/client';
+import { hash } from 'bcrypt';
+import * as config from '../config/settings.development.json';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  console.log('Seeding database...');
+
+  for (const account of config.defaultAccounts) {
+    console.log(`➡️ Creating user: ${account.email}`);
+
+    // eslint-disable-next-line no-await-in-loop
+    const hashedPassword = await hash(account.password, 10);
+
+    // eslint-disable-next-line no-await-in-loop
+    await prisma.user.upsert({
+      where: { email: account.email },
+      update: {},
+      create: {
+        email: account.email,
+        password: hashedPassword,
+        role: account.role ? (account.role as Role) : Role.USER,
+      },
+    });
+  }
+
+  console.log('Seeding complete!');
+}
+
+main()
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });
