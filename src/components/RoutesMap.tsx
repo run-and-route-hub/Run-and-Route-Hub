@@ -64,10 +64,10 @@ export default function RoutesMapGoogle() {
           />
         ))}
         {routes.map((r) => (
-          <>
-            {r.start && <Marker key={`${r.id}-start`} position={r.start} label="S" />}
-            {r.end && <Marker key={`${r.id}-end`} position={r.end} label="E" />}
-          </>
+          <div key={r.id}>
+            {r.start && <Marker key={`${r.id}-start`} position={r.start} label="S" title={r.name+" start"}/>}
+            {r.end && <Marker key={`${r.id}-end`} position={r.end} label="E" title={r.name+" end"}/>}
+          </div>
         ))}
       </GoogleMap>
     </LoadScript>

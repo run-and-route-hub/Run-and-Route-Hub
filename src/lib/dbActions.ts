@@ -2,6 +2,8 @@
 
 import { hash } from 'bcrypt';
 import { prisma } from './prisma';
+import { redirect } from 'next/navigation';
+import path from 'path';
 
 /**
  * Creates a new user in the database.
@@ -17,7 +19,28 @@ export async function createUser(credentials: { email: string; password: string 
     },
   });
 }
-
+/**
+ * Adds a new route to the database.
+ * @param route, 
+ */
+export async function addRoute(route: {   
+  name: string,
+  color?: string,
+  path: google.maps.LatLngLiteral[],
+  start?: google.maps.LatLngLiteral,
+  end?: google.maps.LatLngLiteral}) {
+  await prisma.route.create({
+    data: {
+      name: route.name,
+      color: route.color || null,
+      path: route.path,
+      start: route.start || null,
+      end: route.end || null,
+    },
+  });
+  // After adding, redirect to the list page
+  redirect('/routes');
+}
 /**
  * Changes the password of an existing user in the database.
  * @param credentials, an object with the following properties: email, password.
