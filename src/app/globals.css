@@ -44,12 +44,9 @@ footer a:hover {
   color: var(--nat-navbar-highlight-text);
 }
 
-.custom-navbar .nav-link:not(:first-child) {
-  border-left: 2px solid #000000;
-  padding-left: 0.75rem;
-}
-
 footer a {
   color: var(--nat-navbar-text-color);
   text-decoration: none;
+  display: inline-block;
+  align-self: center;
 }
