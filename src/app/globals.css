@@ -52,4 +52,6 @@ footer a:hover {
 footer a {
   color: var(--nat-navbar-text-color);
   text-decoration: none;
+  display: inline-block;
+  align-self: center;
 }
