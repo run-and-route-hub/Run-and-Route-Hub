@@ -1,13 +1,11 @@
 :root {
-  --nat-navbar-bg: gray;
-  --nat-navbar-bg-darkblue: gray;
-  --nat-navbar-bg-rgb: 128, 128, 128;
-  --nat-navbar-text-color: black; 
+  --nat-navbar-bg: rgb(62, 99, 62);
+  --nat-navbar-bg-rgb: 62, 99, 62;
+  --nat-navbar-text-color: black;
   --nat-navbar-highlight-text: white;
 }
 
 html,
-
 body {
   --bs-light-rgb: 236, 236, 236;
   box-sizing: border-box;
@@ -34,15 +32,24 @@ body .navbar {
 .custom-navbar {
   background-color: var(--nat-navbar-bg) !important;
   color: var(--nat-navbar-text-color);
-} 
+}
 
 .custom-navbar .nav-link {
   position: relative;
   color: var(--nat-navbar-text-color);
 }
 
-/* Add a divider to every link except the first one */
+.custom-navbar .nav-link:hover,
+footer a:hover {
+  color: var(--nat-navbar-highlight-text);
+}
+
 .custom-navbar .nav-link:not(:first-child) {
   border-left: 2px solid #000000;
   padding-left: 0.75rem;
+}
+
+footer a {
+  color: var(--nat-navbar-text-color);
+  text-decoration: none;
 }
