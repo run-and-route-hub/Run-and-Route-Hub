@@ -24,8 +24,8 @@ datasource db {
   // url      = env("DATABASE_URL")
   url      = "postgresql://postgres:491168985@localhost:5432/YOURDB?schema=public"
   // for Vercel
-  // url       = env("POSTGRES_PRISMA_URL")
-  // directUrl = env("POSTGRES_URL_NON_POOLING")
+   url       = env("POSTGRES_PRISMA_URL")
+   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum Role {
