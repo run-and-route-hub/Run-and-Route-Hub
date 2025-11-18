@@ -19,7 +19,7 @@ export async function createUser(credentials: { email: string; password: string 
 }
 
 /**
- * Changes the password of an existing user in the database.
+ * Changes the password of an existing user in the database. n
  * @param credentials, an object with the following properties: email, password.
  */
 export async function changePassword(credentials: { email: string; password: string }) {
