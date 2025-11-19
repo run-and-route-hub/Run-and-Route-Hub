@@ -15,7 +15,7 @@ const Footer = () => (
           <a href="http://ics-software-engineering.github.io/nextjs-application-template">Template Home Page</a>
         </Col>
         <Col className="d-flex flex-column justify-content-center">
-          <a href="aboutus">About Us</a>
+          <a href="https://run-and-route-hub.github.io/">About Us</a>
         </Col>
       </Row>
       <Col className="d-flex flex-column justify-content-center text-center">&copy; 2024 Run and Route Hub</Col>
