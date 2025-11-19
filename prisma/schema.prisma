@@ -1,31 +1,14 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  role     Role    @default(USER)
-
-  routes   Route[]
-  runLogs  RunLog[]
-}
-
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   // for local development
-  // url      = env("DATABASE_URL")
-  url      = "postgresql://postgres:csw5131742@localhost:5432/YOURDB?schema=public"
+  //url      = env("DATABASE_URL")
   // for Vercel
-  // url       = env("POSTGRES_PRISMA_URL")
-  // directUrl = env("POSTGRES_URL_NON_POOLING")
+  url       = env("POSTGRES_PRISMA_URL")
+  //directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum Role {
@@ -33,25 +16,24 @@ enum Role {
   ADMIN
 }
 
-model Route {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name       String
-  description String?
-  distance  Float
-  path       Json?
-  runLogs     RunLog[]
+enum Condition {
+  excellent
+  good
+  fair
+  poor
 }
 
-model RunLog {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  routeId    Int?
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  route      Route?   @relation(fields: [routeId], references: [id], onDelete: SetNull)
-  durationMin Int
-  avgPace     Float?
-  calories    Int?
-  notes       String?
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  password String
+  role     Role    @default(USER)
+}
+
+model Stuff {
+  id        Int       @id @default(autoincrement())
+  name      String
+  quantity  Int
+  condition Condition @default(good)
+  owner     String
 }

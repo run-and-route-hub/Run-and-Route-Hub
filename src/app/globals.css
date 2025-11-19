@@ -1,3 +1,10 @@
+:root {
+  --nat-navbar-bg: rgb(62, 99, 62);
+  --nat-navbar-bg-rgb: 62, 99, 62;
+  --nat-navbar-text-color: black;
+  --nat-navbar-highlight-text: white;
+}
+
 html,
 body {
   --bs-light-rgb: 236, 236, 236;
@@ -6,6 +13,15 @@ body {
   padding: 0;
   margin: 0;
 }
+
+body .navbar {
+  --bs-navbar-active-color: var(--nat-navbar-highlight-text);
+  --bs-navbar-brand-color: var(--nat-navbar-text-color);
+  --bs-navbar-brand-hover-color: var(--nat-navbar-highlight-text);
+  --bs-navbar-color: var(--nat-navbar-text-color);
+  --bs-navbar-hover-color: var(--nat-navbar-highlight-text);
+}
+
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;

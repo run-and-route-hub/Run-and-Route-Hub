@@ -1,6 +1,6 @@
 'use server';
 
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs';
 import { prisma } from './prisma';
 import { redirect } from 'next/navigation';
 import path from 'path';
@@ -42,7 +42,7 @@ export async function addRoute(route: {
   redirect('/routes');
 }
 /**
- * Changes the password of an existing user in the database.
+ * Changes the password of an existing user in the database. n
  * @param credentials, an object with the following properties: email, password.
  */
 export async function changePassword(credentials: { email: string; password: string }) {

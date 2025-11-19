@@ -2,5 +2,33 @@
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
     { "email": "john@foo.com", "password": "changeme" }
+  ],
+
+  "defaultData": [
+    {
+      "name": "Running Shoes",
+      "quantity": 1,
+      "condition": "good",
+      "owner": "admin@foo.com"
+    },
+    {
+      "name": "Water Bottle",
+      "quantity": 2,
+      "condition": "excellent",
+      "owner": "john@foo.com"
+    },
+    {
+      "name": "Hat",
+      "quantity": 1,
+      "condition": "fair",
+      "owner": "john@foo.com"
+    },
+    {
+      "name": "Extra Socks",
+      "quantity": 5,
+      "condition": "good",
+      "owner": "admin@foo.com"
+    }
   ]
 }
+
