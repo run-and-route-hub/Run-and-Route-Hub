@@ -29,15 +29,7 @@ export async function addRoute(route: {
   path: google.maps.LatLngLiteral[],
   start?: google.maps.LatLngLiteral,
   end?: google.maps.LatLngLiteral }) {
-  await prisma.route.create({
-    data: {
-      name: route.name,
-      color: route.color || null,
-      path: route.path,
-      start: route.start || null,
-      end: route.end || null,
-    },
-  });
+  console.log(route);
   // After adding, redirect to the list page
   redirect('/routes');
 }
