@@ -19,8 +19,7 @@ export default function FindRunMockupPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div>
-            <label classNam
-            e="block text-gray-800 font-medium mb-1">Difficulty Level</label>
+            <label className="block text-gray-800 font-medium mb-1">Difficulty Level</label>
             <select className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white">
               <option>Any</option>
               <option>Easy</option>
