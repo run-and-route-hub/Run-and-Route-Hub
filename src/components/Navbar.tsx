@@ -13,6 +13,7 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+
   return (
     <Navbar className="custom-navbar" expand="lg">
       <Container>
@@ -30,6 +31,7 @@ const NavBar: React.FC = () => {
                   >
                     Add Run
                   </Nav.Link>,
+
                   <Nav.Link
                     id="list-run-nav"
                     href="/list"
@@ -38,6 +40,7 @@ const NavBar: React.FC = () => {
                   >
                     Find Run
                   </Nav.Link>,
+
                   <Nav.Link
                     id="find-buddy-nav"
                     href="/findbuddy"
@@ -46,16 +49,24 @@ const NavBar: React.FC = () => {
                   >
                     Find Running Buddy
                   </Nav.Link>,
+
                 ]
               : ''}
+
             {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
+              <Nav.Link
+                id="admin-stuff-nav"
+                href="/admin"
+                key="admin"
+                active={pathName === '/admin'}
+              >
                 Admin
               </Nav.Link>
             ) : (
               ''
             )}
           </Nav>
+
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
@@ -63,6 +74,7 @@ const NavBar: React.FC = () => {
                   <BoxArrowRight />
                   Sign Out
                 </NavDropdown.Item>
+
                 <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
                   <Lock />
                   Change Password
@@ -74,6 +86,7 @@ const NavBar: React.FC = () => {
                   <PersonFill />
                   Sign in
                 </NavDropdown.Item>
+
                 <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
                   <PersonPlusFill />
                   Sign up
