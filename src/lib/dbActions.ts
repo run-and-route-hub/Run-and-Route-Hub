@@ -23,12 +23,12 @@ export async function createUser(credentials: { email: string; password: string 
  * Adds a new route to the database.
  * @param route, 
  */
-export async function addRoute(route: {   
+export async function addRoute(route: {
   name: string,
   color?: string,
   path: google.maps.LatLngLiteral[],
   start?: google.maps.LatLngLiteral,
-  end?: google.maps.LatLngLiteral}) {
+  end?: google.maps.LatLngLiteral }) {
   await prisma.route.create({
     data: {
       name: route.name,

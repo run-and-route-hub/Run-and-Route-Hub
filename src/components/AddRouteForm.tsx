@@ -1,25 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 'use client';
 
-import React, { useState, FormEvent, useCallback } from 'react';
-import { useRouter, redirect } from 'next/navigation';
+import React, { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { useSession } from 'next-auth/react';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import { addRoute } from '@/lib/dbActions';
-import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddRouteSchema } from '@/lib/validationSchemas';
 
-type Route = {
-  id: string;
-  name: string;
-  color?: string;
-  path: google.maps.LatLngLiteral[];
-  start?: google.maps.LatLngLiteral;
-  end?: google.maps.LatLngLiteral;
-};
 // the adding part is not yet configurable until our database is set up
 
 const AddRouteForm: React.FC = () => {
@@ -44,24 +36,27 @@ const AddRouteForm: React.FC = () => {
   const [selectionMode, setSelectionMode] = useState<'start' | 'end' | null>(null);
 
   function update(key: string, value: any) {
-    setRoute(prev => ({ ...prev, [key]: value }));
+    setRoute((prev) => ({ ...prev, [key]: value }));
   }
 
-  const handleMapClick = useCallback((e: google.maps.MapMouseEvent) => {
-    if (!selectionMode || !e.latLng) return;
+  const handleMapClick = useCallback(
+    (e: google.maps.MapMouseEvent) => {
+      if (!selectionMode || !e.latLng) return;
 
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
-    const coords = { lat, lng };
+      const lat = e.latLng.lat();
+      const lng = e.latLng.lng();
+      const coords = { lat, lng };
 
-    if (selectionMode === 'start') {
-      update('start', coords);
-      setSelectionMode('end');
-    } else if (selectionMode === 'end') {
-      update('end', coords);
-      setSelectionMode(null);
-    }
-  }, [selectionMode]);
+      if (selectionMode === 'start') {
+        update('start', coords);
+        setSelectionMode('end');
+      } else if (selectionMode === 'end') {
+        update('end', coords);
+        setSelectionMode(null);
+      }
+    },
+    [selectionMode],
+  );
 
   async function onSubmit(formData: any) {
     setError(null);
@@ -118,64 +113,66 @@ const AddRouteForm: React.FC = () => {
               <p style={{ margin: '0 0 8px 0', fontSize: 14 }}>
                 {selectionMode === null ? (
                   <>
-                                {route.start ? (
-                                  <span>
-                                    ✓ Start: (
-                                    {route.start.lat.toFixed(4)}
-                                    ,
-                                    {route.start.lng.toFixed(4)}
-                                    )
-                                    {' '}
-                                  </span>
-                                ) : <span>Click "Select Start" to begin</span>}
-                                {route.start && route.end && (
-                                <span>
-                                  ✓ End: (
-                                  {route.end.lat.toFixed(4)}
-                                  ,
-                                  {route.end.lng.toFixed(4)}
-                                  )
-                                </span>
-                                )}
-                              </>
+                    {route.start ? (
+                      <span>
+                        ✓ Start: (
+                        {route.start.lat.toFixed(4)}
+                        ,
+                        {route.start.lng.toFixed(4)}
+                        )
+                        {' '}
+                      </span>
+                    ) : (
+                      <span>Click &quot;Select Start&quot; to begin</span>
+                    )}
+                    {route.start && route.end && (
+                      <span>
+                        ✓ End: (
+                        {route.end.lat.toFixed(4)}
+                        ,
+                        {route.end.lng.toFixed(4)}
+                        )
+                      </span>
+                    )}
+                  </>
                 ) : (
-                              <span>
-                                Click on the map to select
-                                {selectionMode === 'start' ? 'START' : 'END'}
-                                {' '}
-                                point
-                              </span>
+                  <span>
+                    Click on the map to select
+                    {selectionMode === 'start' ? 'START' : 'END'}
+                    {' '}
+                    point
+                  </span>
                 )}
               </p>
               {selectionMode === null && (!route.start || !route.end) && (
-              <button
-                type="button"
-                onClick={() => setSelectionMode('start')}
-                style={{ padding: '6px 12px', marginRight: 8 }}
-              >
-                {route.start ? 'Change Start' : 'Select Start'}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectionMode('start')}
+                  style={{ padding: '6px 12px', marginRight: 8 }}
+                >
+                  {route.start ? 'Change Start' : 'Select Start'}
+                </button>
               )}
               {route.start && selectionMode === null && (
-              <button
-                type="button"
-                onClick={() => setSelectionMode('end')}
-                style={{ padding: '6px 12px', marginRight: 8 }}
-              >
-                {route.end ? 'Change End' : 'Select End'}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectionMode('end')}
+                  style={{ padding: '6px 12px', marginRight: 8 }}
+                >
+                  {route.end ? 'Change End' : 'Select End'}
+                </button>
               )}
               {(route.start || route.end) && (
-              <button
-                type="button"
-                onClick={() => {
-                                setRoute(prev => ({ ...prev, start: null, end: null }));
-                                setSelectionMode(null);
-                              }}
-                style={{ padding: '6px 12px' }}
-              >
-                              Clear Both
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRoute((prev) => ({ ...prev, start: null, end: null }));
+                    setSelectionMode(null);
+                  }}
+                  style={{ padding: '6px 12px' }}
+                >
+                  Clear Both
+                </button>
               )}
             </div>
           </label>
@@ -183,7 +180,7 @@ const AddRouteForm: React.FC = () => {
           <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '400px', borderRadius: 4, marginBottom: 12 }}
-              center={{ lat: 21.3005, lng: -157.8170 }}
+              center={{ lat: 21.3005, lng: -157.817 }}
               zoom={15}
               onClick={handleMapClick}
             >
@@ -194,20 +191,16 @@ const AddRouteForm: React.FC = () => {
         </div>
 
         {error && (
-        <div id="form-error" role="alert" style={{ color: 'crimson', marginBottom: 12 }}>
-          {error}
-        </div>
+          <div id="form-error" role="alert" style={{ color: 'crimson', marginBottom: 12 }}>
+            {error}
+          </div>
         )}
 
         <div>
           <button type="submit" disabled={loading} style={{ padding: '8px 16px' }}>
             {loading ? 'Saving…' : 'Create Route'}
           </button>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            style={{ marginLeft: 8, padding: '8px 16px' }}
-          >
+          <button type="button" onClick={() => router.back()} style={{ marginLeft: 8, padding: '8px 16px' }}>
             Cancel
           </button>
         </div>
