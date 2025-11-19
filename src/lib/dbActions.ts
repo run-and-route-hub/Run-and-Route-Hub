@@ -1,9 +1,8 @@
 'use server';
 
 import { hash } from 'bcryptjs';
-import { prisma } from './prisma';
 import { redirect } from 'next/navigation';
-import path from 'path';
+import { prisma } from './prisma';
 
 /**
  * Creates a new user in the database.
@@ -21,7 +20,7 @@ export async function createUser(credentials: { email: string; password: string 
 }
 /**
  * Adds a new route to the database.
- * @param route, 
+ * @param route,
  */
 export async function addRoute(route: {
   name: string,
