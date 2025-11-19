@@ -39,6 +39,7 @@ export default function FindRunMockupPage() {
           </div>
 
           <div>
+            // eslint-disable-next-line jsx-a11y/label-has-associated-control
             <label className="block text-gray-800 font-medium mb-1">Preferred Pace</label>
             <select className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white">
               <option>Any</option>
