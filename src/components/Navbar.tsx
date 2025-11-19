@@ -20,6 +20,15 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
+            <Nav.Link
+              id="about-nav"
+              href="/about"
+              key="about"
+              active={pathName === '/about'}
+            >
+              About
+            </Nav.Link>
+
             {currentUser
               ? [
                   <Nav.Link
