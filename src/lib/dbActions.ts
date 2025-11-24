@@ -35,7 +35,9 @@ export async function addRoute(route: {
       name: route.name,
       distanceKm: route.distanceKm,
       distanceMile: route.distanceMile,
-      path: route.path,
+      path: {
+        create: route.path,
+      },
     },
   });
   // After adding, redirect to the list page
