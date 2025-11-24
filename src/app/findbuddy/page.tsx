@@ -208,7 +208,7 @@ export default function PartnersPage() {
                     borderRadius: '999px',
                     border: active ? '1px solid #111' : '1px solid #ccc',
                     background: active ? '#3e633e' : '#fff',
-                    color: active ? '#fff' : '#3e633e',
+                    color: active ? '#fff' : '#333',
                     fontSize: '0.85rem',
                     cursor: 'pointer',
                   }}
