@@ -4,7 +4,7 @@
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
 const NavBar: React.FC = () => {
@@ -17,45 +17,27 @@ const NavBar: React.FC = () => {
   return (
     <Navbar className="custom-navbar" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Run & Route Hub</Navbar.Brand>
+        <Navbar.Brand href="/">
+        <Image src="profile/therunhub.png" width={75} height={75} alt="Run And Route Hub" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            <Nav.Link
-              id="about-nav"
-              href="/about"
-              key="about"
-              active={pathName === '/about'}
-            >
+            <Nav.Link id="about-nav" href="/about" key="about" active={pathName === '/about'}>
               About
             </Nav.Link>
 
             {currentUser
               ? [
-                  <Nav.Link
-                    id="add-run-nav"
-                    href="/add"
-                    key="add"
-                    active={pathName === '/add'}
-                  >
+                  <Nav.Link id="add-run-nav" href="/add" key="add" active={pathName === '/add'}>
                     Add Run
                   </Nav.Link>,
 
-                  <Nav.Link
-                    id="list-run-nav"
-                    href="/list"
-                    key="list"
-                    active={pathName === '/list'}
-                  >
+                  <Nav.Link id="list-run-nav" href="/list" key="list" active={pathName === '/list'}>
                     Find Run
                   </Nav.Link>,
 
-                  <Nav.Link
-                    id="find-buddy-nav"
-                    href="/findbuddy"
-                    key="findbuddy"
-                    active={pathName === '/findbuddy'}
-                  >
+                  <Nav.Link id="find-buddy-nav" href="/findbuddy" key="findbuddy" active={pathName === '/findbuddy'}>
                     Find Running Buddy
                   </Nav.Link>,
 
@@ -72,12 +54,7 @@ const NavBar: React.FC = () => {
               : ''}
 
             {currentUser && role === 'ADMIN' ? (
-              <Nav.Link
-                id="admin-stuff-nav"
-                href="/admin"
-                key="admin"
-                active={pathName === '/admin'}
-              >
+              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
                 Admin
               </Nav.Link>
             ) : (
