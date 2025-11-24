@@ -51,7 +51,9 @@ export default function FindRunMockupPage() {
               >
                 <option>Any</option>
                 <option>1 mile</option>
+                <option>2 miles</option>
                 <option>3 miles</option>
+                <option>4 miles</option>
                 <option>5 miles</option>
               </select>
             </label>
