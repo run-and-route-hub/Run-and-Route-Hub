@@ -66,9 +66,9 @@ const AddRouteForm: React.FC = () => {
       return;
     }
     setLoading(true);
-    const path = route.path || [];
-    path.unshift(route.start);
-    path.push(route.end);
+    const path = route.path.map((value: { lat: any; lng: any; }) => ({ lat: value.lat, lng: value.lng })) || [];
+    path.unshift({ lat: route.start.lat, lng: route.start.lng });
+    path.push({ lat: route.start.end, lng: route.start.end });
     try {
       // combine form data with map-selected coordinates
       const payload = {
