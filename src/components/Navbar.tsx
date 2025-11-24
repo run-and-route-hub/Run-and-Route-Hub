@@ -59,6 +59,15 @@ const NavBar: React.FC = () => {
                     Find Running Buddy
                   </Nav.Link>,
 
+                  <Nav.Link
+                    id="profile"
+                    href="/profile"
+                    key="profile"
+                    active={pathName === '/profile'}
+                  >
+                    Profile
+                  </Nav.Link>,
+
                 ]
               : ''}
 
