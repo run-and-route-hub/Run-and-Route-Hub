@@ -7,8 +7,8 @@ export default function FindRunMockupPage() {
       {/* Explanation Section */}
       <div className="mb-10">
         <p className="text-lg text-gray-700">
-          Browse available runs submitted by other users. Each run includes a location, 
-          distance, pace, and estimated difficulty. This is a mockup layout and 
+          Browse available runs submitted by other users. Each run includes a location,
+          distance, pace, and estimated difficulty. This is a mockup layout and
           will later display real run data from the database.
         </p>
       </div>
@@ -58,13 +58,21 @@ export default function FindRunMockupPage() {
             className="border border-gray-300 p-6 rounded-xl shadow-sm hover:shadow-md transition"
           >
             <h3 className="text-xl font-semibold mb-3">[ Run Location ]</h3>
-            <p className="text-gray-700">Distance: <span className="font-medium">[ X miles ]</span></p>
-            <p className="text-gray-700">Pace: <span className="font-medium">[ XX:XX ]</span></p>
-            <p className="text-gray-700">Difficulty: <span className="font-medium">[ Level ]</span></p>
+            <p className="text-gray-700">
+              Distance:
+              <span className="font-medium">[ X miles ]</span>
+            </p>
+            <p className="text-gray-700">
+              Pace:
+              <span className="font-medium">[ XX:XX ]</span>
+            </p>
+            <p className="text-gray-700">
+              Difficulty:
+              <span className="font-medium">[ Level ]</span>
+            </p>
           </div>
         ))}
       </div>
     </div>
   );
 }
-
