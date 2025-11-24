@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 export default function FindRunMockupPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
@@ -20,7 +21,7 @@ export default function FindRunMockupPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div>
             <label className="block text-gray-800 font-medium mb-1">Difficulty Level</label>
-            <select className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white">
+            <select id="test" className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white">
               <option>Any</option>
               <option>Easy</option>
               <option>Moderate</option>
@@ -52,9 +53,9 @@ export default function FindRunMockupPage() {
 
       {/* Run Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {[1, 2, 3].map((_, idx) => (
+        {[1, 2, 3].map((_) => (
           <div
-            key={idx}
+            key={_}
             className="border border-gray-300 p-6 rounded-xl shadow-sm hover:shadow-md transition"
           >
             <h3 className="text-xl font-semibold mb-3">[ Run Location ]</h3>
