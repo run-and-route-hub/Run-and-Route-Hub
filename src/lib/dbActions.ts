@@ -2,6 +2,7 @@
 
 import { hash } from 'bcryptjs';
 import { redirect } from 'next/navigation';
+import { Route } from '@prisma/client';
 import { prisma } from './prisma';
 
 /**
@@ -24,11 +25,19 @@ export async function createUser(credentials: { email: string; password: string 
  */
 export async function addRoute(route: {
   name: string,
-  color?: string,
-  path: google.maps.LatLngLiteral[],
-  start?: google.maps.LatLngLiteral,
-  end?: google.maps.LatLngLiteral }) {
+  distanceKm: number,
+  distanceMile: number,
+  path: { lat: number, lng: number }[]
+}) {
   console.log(route);
+  await prisma.route.create({
+    data: {
+      name: route.name,
+      distanceKm: route.distanceKm,
+      distanceMile: route.distanceMile,
+      path: route.path,
+    },
+  });
   // After adding, redirect to the list page
   redirect('/routes');
 }

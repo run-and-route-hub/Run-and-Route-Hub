@@ -50,6 +50,7 @@ model Route {
   id         Int        @id @default(autoincrement())
   name       String
   distanceKm Float
+  distanceMile Float
   color      String
   path       Location[]
 }
