@@ -65,15 +65,17 @@ const AddRouteForm: React.FC = () => {
       setError('Please provide a start location and an end location by clicking the map.');
       return;
     }
-
     setLoading(true);
+    const path = route.path || [];
+    path.unshift(route.start);
+    path.push(route.end);
     try {
       // combine form data with map-selected coordinates
       const payload = {
         name: formData.name,
-        start: route.start,
-        end: route.end,
-        path: route.path || [],
+        distanceMile: formData.distanceMile,
+        distanceKm: formData.distanceKm,
+        path,
       };
 
       await addRoute(payload);
