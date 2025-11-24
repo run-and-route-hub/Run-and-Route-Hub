@@ -37,3 +37,17 @@ model Stuff {
   condition Condition @default(good)
   owner     String
 }
+
+model Location {
+  id Int @id @default(autoincrement())
+  lat Float
+  lng Float
+}
+
+model Route {
+  id Int @id @default(autoincrement())
+  name String
+  distanceKm Float
+  color String;
+  path Location[];
+}
