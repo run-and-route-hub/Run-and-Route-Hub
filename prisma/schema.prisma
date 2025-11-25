@@ -51,8 +51,8 @@ model Route {
   name       String
   distanceKm Float
   distanceMile Float
-  colorr      String
-  colorg      String
-  colorb      String
+  colorr      Int
+  colorg      Int
+  colorb      Int
   path       Location[]
 }
