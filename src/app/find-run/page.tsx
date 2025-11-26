@@ -1,112 +1,132 @@
 export default function FindRunMockupPage() {
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
-      {/* Page Title */}
-      <h1 className="text-4xl font-bold mb-8">Find Run Page</h1>
+    <main>
+      <div style={{ maxWidth: '96rem', margin: '0 auto', padding: '2.5rem 1.5rem' }}>
+        {/* Page Title */}
+        <h1 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '2rem' }}>Find Run Page</h1>
 
-      {/* Explanation Section */}
-      <div className="mb-10">
-        <p className="text-lg text-gray-700">
-          Browse available runs submitted by other users. Each run includes a
-          location, distance, pace, and estimated difficulty. This is a mockup
-          layout and will later display real run data from the database.
-        </p>
-      </div>
+        {/* Explanation Section */}
+        <div style={{ marginBottom: '2.5rem' }}>
+          <p style={{ fontSize: '1.125rem', color: '#374151' }}>
+            Explore available running routes submitted by other users.
+            Each run includes details such as location, distance, pace,
+            and difficulty level—all sourced from the live database.
+          </p>
+        </div>
 
-      {/* Filter Section */}
-      <div className="mb-14">
-        <h2 className="text-2xl font-semibold mb-4">Filter Runs</h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {/* Filter Section */}
+        <div style={{ marginBottom: '3.5rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem' }}>Filter Runs</h2>
 
           {/* Difficulty */}
-          <div>
-            <label
-              htmlFor="difficulty"
-              className="block text-gray-800 font-medium mb-1"
-            >
-              Difficulty Level
-              <select
-                id="difficulty"
-                className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white mt-1"
-              >
-                <option>Any</option>
-                <option>Easy</option>
-                <option>Moderate</option>
-                <option>Hard</option>
-              </select>
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="difficulty" style={{ fontWeight: '500', color: '#1f2937' }}>
+              Difficulty Level:
             </label>
+            <select
+              id="difficulty"
+              style={{
+                marginLeft: '15px',
+                padding: '8px',
+                borderRadius: '6px',
+                textAlign: 'center',
+              }}
+            >
+              <option>Any</option>
+              <option>Easy</option>
+              <option>Moderate</option>
+              <option>Hard</option>
+            </select>
           </div>
 
           {/* Minimum Distance */}
-          <div>
-            <label
-              htmlFor="minDistance"
-              className="block text-gray-800 font-medium mb-1"
-            >
-              Minimum Distance
-              <select
-                id="minDistance"
-                className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white mt-1"
-              >
-                <option>Any</option>
-                <option>1 mile</option>
-                <option>2 miles</option>
-                <option>3 miles</option>
-                <option>4 miles</option>
-                <option>5 miles</option>
-              </select>
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="minDistance" style={{ fontWeight: '500', color: '#1f2937' }}>
+              Minimum Distance:
             </label>
+            <select
+              id="minDistance"
+              style={{
+                marginLeft: '15px',
+                padding: '8px',
+                borderRadius: '6px',
+                textAlign: 'center',
+              }}
+            >
+              <option>Any</option>
+              <option>1 mile</option>
+              <option>2 miles</option>
+              <option>3 miles</option>
+              <option>4 miles</option>
+              <option>5 miles</option>
+            </select>
           </div>
 
-          {/* Pace */}
-          <div>
-            <label
-              htmlFor="pace"
-              className="block text-gray-800 font-medium mb-1"
-            >
-              Preferred Pace
-              <select
-                id="pace"
-                className="border border-gray-400 rounded-md px-3 py-2 w-full bg-white mt-1"
-              >
-                <option>Any</option>
-                <option>Slow</option>
-                <option>Moderate</option>
-                <option>Fast</option>
-              </select>
+          {/* Preferred Pace */}
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="pace" style={{ fontWeight: '500', color: '#1f2937' }}>
+              Preferred Pace:
             </label>
+            <select
+              id="pace"
+              style={{
+                marginLeft: '15px',
+                padding: '8px',
+                borderRadius: '6px',
+                textAlign: 'center',
+              }}
+            >
+              <option>Any</option>
+              <option>Slow</option>
+              <option>Moderate</option>
+              <option>Fast</option>
+            </select>
           </div>
+        </div>
 
+        {/* Run Cards */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '2rem',
+          }}
+        >
+          {[1, 2, 3].map((_, idx) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={idx}>
+              <div
+                style={{
+                  border: '1px solid #d1d5db',
+                  padding: '1.5rem',
+                  borderRadius: '1rem',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+                  transition: 'box-shadow 0.2s ease',
+                }}
+              >
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.75rem' }}>
+                  Run Location
+                </h3>
+
+                <p style={{ color: '#374151' }}>
+                  Distance:
+                  <span style={{ fontWeight: '500' }}> X miles </span>
+                </p>
+
+                <p style={{ color: '#374151' }}>
+                  Pace:
+                  <span style={{ fontWeight: '500' }}> XX:XX </span>
+                </p>
+
+                <p style={{ color: '#374151' }}>
+                  Difficulty:
+                  <span style={{ fontWeight: '500' }}> Level </span>
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* Run Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {[1, 2, 3].map((_, idx) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={idx}>
-            <div className="border border-gray-300 p-6 rounded-xl shadow-sm hover:shadow-md transition">
-              <h3 className="text-xl font-semibold mb-3">Run Location</h3>
-
-              <p className="text-gray-700">
-                Distance:
-                <span className="font-medium"> X miles </span>
-              </p>
-
-              <p className="text-gray-700">
-                Pace:
-                <span className="font-medium"> XX:XX </span>
-              </p>
-
-              <p className="text-gray-700">
-                Difficulty:
-                <span className="font-medium"> Level </span>
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    </main>
   );
 }
