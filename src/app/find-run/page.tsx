@@ -2,7 +2,7 @@ export default function FindRunMockupPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
       {/* Page Title */}
-      <h1 className="text-4xl font-bold mb-8">Find Run Page (Mockup)</h1>
+      <h1 className="text-4xl font-bold mb-8">Find Run Page</h1>
 
       {/* Explanation Section */}
       <div className="mb-10">
