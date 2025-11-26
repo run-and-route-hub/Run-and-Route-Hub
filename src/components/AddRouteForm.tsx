@@ -65,7 +65,6 @@ const AddRouteForm: React.FC = () => {
   );
 
   async function onSubmit(formData: any) {
-    console.log('loading');
     setError(null);
 
     if (!route.start || !route.end) {
@@ -75,10 +74,10 @@ const AddRouteForm: React.FC = () => {
     setLoading(true);
     const pathlist = route.path.map((value: { lat: any; lng: any }) => ({ lat: value.lat, lng: value.lng })) || [];
     pathlist.unshift({ lat: route.start.lat, lng: route.start.lng });
-    pathlist.push({ lat: route.start.end, lng: route.start.end });
+    pathlist.push({ lat: route.end.lat, lng: route.end.lng });
     let distanceKm = 0;
     for (let i = 0; i < pathlist.length - 1; i++) {
-      distanceKm += getStraightLineDistance(pathlist[i].lat, pathlist[i].lng, pathlist[i + 1].lat, pathlist[i + 1].lat);
+      distanceKm += getStraightLineDistance(pathlist[i].lat, pathlist[i].lng, pathlist[i + 1].lat, pathlist[i + 1].lng);
     }
     const distanceMile = distanceKm * 0.621371;
     try {
