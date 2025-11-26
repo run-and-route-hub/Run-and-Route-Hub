@@ -65,6 +65,7 @@ const AddRouteForm: React.FC = () => {
   );
 
   async function onSubmit(formData: any) {
+    console.log('loading');
     setError(null);
 
     if (!route.start || !route.end) {
