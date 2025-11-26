@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { addRoute } from '@/lib/dbActions';
 import { AddRouteSchema } from '@/lib/validationSchemas';
@@ -28,7 +29,11 @@ const AddRouteForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<any>({
-    resolver: yupResolver(AddRouteSchema),
+    resolver: yupResolver(
+      Yup.object({
+        name: Yup.string().required('Route name is required'),
+      }),
+    ),
   });
   const router = useRouter();
   const [route, setRoute] = useState<Record<string, any>>({
@@ -64,11 +69,13 @@ const AddRouteForm: React.FC = () => {
     [selectionMode],
   );
 
-  async function onSubmit(formData: any) {
+  const handleFormSubmit = rhfHandleSubmit(async (formData: any) => {
     setError(null);
 
     if (!route.start || !route.end) {
-      setError('Please provide a start location and an end location by clicking the map.');
+      const errorMsg = 'Please provide a start location and an end location by clicking the map.';
+      setError(errorMsg);
+      console.error(errorMsg);
       return;
     }
     setLoading(true);
@@ -99,13 +106,13 @@ const AddRouteForm: React.FC = () => {
       setError(err?.message || 'An error occurred');
       setLoading(false);
     }
-  }
+  });
 
   return (
     <main style={{ maxWidth: 720, margin: '2rem auto', padding: '0 1rem' }}>
       <h1>Add Route</h1>
 
-      <form onSubmit={rhfHandleSubmit(onSubmit)} aria-describedby="form-error">
+      <form onSubmit={handleFormSubmit} aria-describedby="form-error">
         <div style={{ marginBottom: 12 }}>
           <label>
             Name
