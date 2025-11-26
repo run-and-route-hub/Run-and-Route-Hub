@@ -17,8 +17,13 @@ import { AddRouteSchema } from '@/lib/validationSchemas';
 function getStraightLineDistance(lat1: number, lng1: number, lat2: number, lng2: number) {
   const p1 = new google.maps.LatLng(lat1, lng1);
   const p2 = new google.maps.LatLng(lat2, lng2);
-  const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(p1, p2);
-  return distanceInMeters * 1000; // Returns distance in km
+  // Ensure the geometry library is available (LoadScript must include `libraries=["geometry"]`).
+  const compute = (google as any)?.maps?.geometry?.spherical?.computeDistanceBetween;
+  if (typeof compute !== 'function') {
+    throw new Error('Google Maps geometry library not loaded. Ensure LoadScript includes `libraries={["geometry"]}`.');
+  }
+  const distanceInMeters = compute(p1, p2);
+  return distanceInMeters / 1000; // Returns distance in km
 }
 
 const AddRouteForm: React.FC = () => {
@@ -197,7 +202,7 @@ const AddRouteForm: React.FC = () => {
             </div>
           </label>
 
-          <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
+          <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!} libraries={['geometry']}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '400px', borderRadius: 4, marginBottom: 12 }}
               center={{ lat: 21.3005, lng: -157.817 }}
