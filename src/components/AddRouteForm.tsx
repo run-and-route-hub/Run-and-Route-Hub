@@ -65,15 +65,17 @@ const AddRouteForm: React.FC = () => {
       setError('Please provide a start location and an end location by clicking the map.');
       return;
     }
-
     setLoading(true);
+    const pathlist = route.path.map((value: { lat: any; lng: any; }) => ({ lat: value.lat, lng: value.lng })) || [];
+    pathlist.unshift({ lat: route.start.lat, lng: route.start.lng });
+    pathlist.push({ lat: route.start.end, lng: route.start.end });
     try {
       // combine form data with map-selected coordinates
       const payload = {
         name: formData.name,
-        start: route.start,
-        end: route.end,
-        path: route.path || [],
+        distanceMile: formData.distanceMile,
+        distanceKm: formData.distanceKm,
+        path: pathlist,
       };
 
       await addRoute(payload);
@@ -148,12 +150,7 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode('start')}
-                  style={{
-                    padding: '0.3rem 0.7rem',
-                    borderRadius: '999px',
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                  }}
+                  style={{ padding: '6px 12px', marginRight: 8 }}
                 >
                   {route.start ? 'Change Start' : 'Select Start'}
                 </button>
@@ -162,12 +159,7 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode('end')}
-                  style={{
-                    padding: '0.3rem 0.7rem',
-                    borderRadius: '999px',
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                  }}
+                  style={{ padding: '6px 12px', marginRight: 8 }}
                 >
                   {route.end ? 'Change End' : 'Select End'}
                 </button>
@@ -179,12 +171,7 @@ const AddRouteForm: React.FC = () => {
                     setRoute((prev) => ({ ...prev, start: null, end: null }));
                     setSelectionMode(null);
                   }}
-                  style={{
-                    padding: '0.3rem 0.7rem',
-                    borderRadius: '999px',
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                  }}
+                  style={{ padding: '6px 12px' }}
                 >
                   Clear Both
                 </button>
@@ -212,29 +199,10 @@ const AddRouteForm: React.FC = () => {
         )}
 
         <div>
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              padding: '0.3rem 0.7rem',
-              borderRadius: '999px',
-              fontSize: '0.85rem',
-              cursor: 'pointer',
-              marginRight: '1rem',
-            }}
-          >
+          <button type="submit" disabled={loading} style={{ padding: '8px 16px' }}>
             {loading ? 'Saving…' : 'Create Route'}
           </button>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            style={{
-              padding: '0.3rem 0.7rem',
-              borderRadius: '999px',
-              fontSize: '0.85rem',
-              cursor: 'pointer',
-            }}
-          >
+          <button type="button" onClick={() => router.back()} style={{ marginLeft: 8, padding: '8px 16px' }}>
             Cancel
           </button>
         </div>
