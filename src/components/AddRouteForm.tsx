@@ -13,6 +13,12 @@ import { addRoute } from '@/lib/dbActions';
 import { AddRouteSchema } from '@/lib/validationSchemas';
 
 // the adding part is not yet configurable until our database is set up
+function getStraightLineDistance(lat1: number, lng1: number, lat2: number, lng2: number) {
+  const p1 = new google.maps.LatLng(lat1, lng1);
+  const p2 = new google.maps.LatLng(lat2, lng2);
+  const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(p1, p2);
+  return distanceInMeters * 1000; // Returns distance in km
+}
 
 const AddRouteForm: React.FC = () => {
   // console.log('AddStuffForm', status, session);
@@ -66,15 +72,20 @@ const AddRouteForm: React.FC = () => {
       return;
     }
     setLoading(true);
-    const pathlist = route.path.map((value: { lat: any; lng: any; }) => ({ lat: value.lat, lng: value.lng })) || [];
+    const pathlist = route.path.map((value: { lat: any; lng: any }) => ({ lat: value.lat, lng: value.lng })) || [];
     pathlist.unshift({ lat: route.start.lat, lng: route.start.lng });
     pathlist.push({ lat: route.start.end, lng: route.start.end });
+    let distanceKm = 0;
+    for (let i = 0; i < pathlist.length - 1; i++) {
+      distanceKm += getStraightLineDistance(pathlist[i].lat, pathlist[i].lng, pathlist[i + 1].lat, pathlist[i + 1].lat);
+    }
+    const distanceMile = distanceKm * 0.621371;
     try {
       // combine form data with map-selected coordinates
       const payload = {
         name: formData.name,
-        distanceMile: formData.distanceMile,
-        distanceKm: formData.distanceKm,
+        distanceMile,
+        distanceKm,
         path: pathlist,
       };
 
