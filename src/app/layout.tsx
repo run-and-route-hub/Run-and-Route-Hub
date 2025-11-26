@@ -19,8 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const classString = `${inter.className} wrapper`;
+
   return (
     <html lang="en">
+      <head>
+        {/* Add the Poppins Google Font link here */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={classString}>
         <Providers>
           <NavBar />
