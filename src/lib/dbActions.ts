@@ -2,7 +2,6 @@
 
 import { hash } from 'bcryptjs';
 import { redirect } from 'next/navigation';
-import { Route } from '@prisma/client';
 import { prisma } from './prisma';
 
 /**
