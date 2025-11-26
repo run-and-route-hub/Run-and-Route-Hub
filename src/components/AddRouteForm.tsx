@@ -13,17 +13,21 @@ import swal from 'sweetalert';
 import { addRoute } from '@/lib/dbActions';
 import { AddRouteSchema } from '@/lib/validationSchemas';
 
-// the adding part is not yet configurable until our database is set up
-function getStraightLineDistance(lat1: number, lng1: number, lat2: number, lng2: number) {
-  const p1 = new google.maps.LatLng(lat1, lng1);
-  const p2 = new google.maps.LatLng(lat2, lng2);
-  // Ensure the geometry library is available (LoadScript must include `libraries=["geometry"]`).
-  const compute = (google as any)?.maps?.geometry?.spherical?.computeDistanceBetween;
-  if (typeof compute !== 'function') {
-    throw new Error('Google Maps geometry library not loaded. Ensure LoadScript includes `libraries={["geometry"]}`.');
-  }
-  const distanceInMeters = compute(p1, p2);
-  return distanceInMeters / 1000; // Returns distance in km
+function getStraightLineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // Radius of the Earth in kilometers (you can use 3959 for miles)
+
+  // Convert degrees to radians
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+    + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const distance = R * c; // Distance in kilometers
+
+  return distance;
 }
 
 const AddRouteForm: React.FC = () => {
@@ -202,7 +206,7 @@ const AddRouteForm: React.FC = () => {
             </div>
           </label>
 
-          <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!} libraries={['geometry']}>
+          <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '400px', borderRadius: 4, marginBottom: 12 }}
               center={{ lat: 21.3005, lng: -157.817 }}
