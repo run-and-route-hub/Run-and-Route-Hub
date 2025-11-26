@@ -32,13 +32,13 @@ export async function addRoute(route: {
   await prisma.route.create({
     data: {
       name: route.name,
-      colorr: Math.random() * 255,
-      colorg: Math.random() * 255,
-      colorb: Math.random() * 255,
+      colorr: Math.floor(Math.random() * 256),
+      colorg: Math.floor(Math.random() * 256),
+      colorb: Math.floor(Math.random() * 256),
       distanceKm: route.distanceKm,
       distanceMile: route.distanceMile,
       path: {
-        create: route.path,
+        create: route.path.map((p) => ({ lat: p.lat, lng: p.lng })),
       },
     },
   });
