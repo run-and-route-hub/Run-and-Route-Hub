@@ -19,13 +19,13 @@ export const AddRouteSchema = Yup.object({
   path: Yup.array().of(Yup.object({
     lat: Yup.number().required(),
     lng: Yup.number().required(),
-  })),
+  })).optional(),
   start: Yup.object({
     lat: Yup.number().required(),
     lng: Yup.number().required(),
-  }).optional(),
+  }).required(),
   end: Yup.object({
     lat: Yup.number().required(),
     lng: Yup.number().required(),
-  }).optional(),
+  }).required(),
 });
