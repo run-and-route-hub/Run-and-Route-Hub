@@ -14,6 +14,7 @@ import { addRoute } from '@/lib/dbActions';
 import { AddRouteSchema } from '@/lib/validationSchemas';
 
 function getStraightLineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  return 0;
   const R = 6371; // Radius of the Earth in kilometers (you can use 3959 for miles)
 
   // Convert degrees to radians
