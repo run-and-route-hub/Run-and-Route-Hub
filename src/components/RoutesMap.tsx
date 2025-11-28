@@ -19,6 +19,5 @@ export default async function RoutesMap() {
       };
     }),
   );
-
   return <RoutesMapClient routes={routes} />;
 }
