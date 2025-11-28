@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { GoogleMap, LoadScript, Polyline, Marker, InfoWindow } from '@react-google-maps/api';
+import { prisma } from '@/lib/prisma';
 
 type Route = {
   id: string;
@@ -19,71 +20,46 @@ type SelectedMarker = {
   type: 'start' | 'end';
 };
 
-// Example UH Mānoa / Honolulu routes for demo
-const routes: Route[] = [
-  {
-    id: 'campus-loop',
-    name: 'Campus Loop',
-    distanceKm: 3,
-    color: '#2a9d8f',
-    path: [
-      { lat: 21.3005, lng: -157.8170 },
-      { lat: 21.2989, lng: -157.8185 },
-      { lat: 21.2979, lng: -157.8174 },
-      { lat: 21.2996, lng: -157.8159 },
-      { lat: 21.3005, lng: -157.8170 },
-    ],
-    start: { lat: 21.3005, lng: -157.8170 },
-    end: { lat: 21.3005, lng: -157.8170 }, // loop
-  },
-  {
-    id: 'valley-out-back',
-    name: 'Valley Out & Back',
-    distanceKm: 5,
-    color: '#e76f51',
-    path: [
-      { lat: 21.3018, lng: -157.8175 },
-      { lat: 21.3035, lng: -157.8190 },
-      { lat: 21.3050, lng: -157.8200 },
-      { lat: 21.3064, lng: -157.8215 },
-      { lat: 21.3050, lng: -157.8200 },
-      { lat: 21.3035, lng: -157.8190 },
-      { lat: 21.3018, lng: -157.8175 },
-    ],
-    start: { lat: 21.3018, lng: -157.8175 },
-    end: { lat: 21.3018, lng: -157.8175 }, // also loop
-  },
-];
+const routes: Route[] = await prisma.route.findMany({}).then((dbRoutes) => Promise.all(
+  dbRoutes.map(async (r) => {
+    const path = await prisma.location
+      .findMany({
+        where: { routeId: r.id },
+        orderBy: { id: 'asc' },
+      })
+      .then((locations) => locations.map((loc) => ({
+        lat: loc.lat,
+        lng: loc.lng,
+      })));
+    return {
+      id: String(r.id),
+      name: r.name,
+      distanceKm: r.distanceKm,
+      color: `rgb(${r.colorr}, ${r.colorg}, ${r.colorb})`,
+      path,
+      start: path[0],
+      end: path[path.length - 1],
+    };
+  }),
+));
 
 // Helper: are two points the same?
-function sameLatLng(
-  a?: google.maps.LatLngLiteral,
-  b?: google.maps.LatLngLiteral,
-): boolean {
+function sameLatLng(a?: google.maps.LatLngLiteral, b?: google.maps.LatLngLiteral): boolean {
   if (!a || !b) return false;
   return a.lat === b.lat && a.lng === b.lng;
 }
 
 export default function RoutesMapGoogle() {
   // Center the map around the first route
-  const center = useMemo(
-    () => routes[0]?.path[0] ?? { lat: 21.3005, lng: -157.8170 },
-    [],
-  );
+  const center = useMemo(() => routes[0]?.path[0] ?? { lat: 21.3005, lng: -157.817 }, []);
 
   const [selected, setSelected] = useState<SelectedMarker | null>(null);
 
-  const handleMarkerClick = (
-    routeId: string,
-    position: google.maps.LatLngLiteral,
-    type: 'start' | 'end',
-  ) => {
+  const handleMarkerClick = (routeId: string, position: google.maps.LatLngLiteral, type: 'start' | 'end') => {
     setSelected({ routeId, position, type });
   };
 
-  const selectedRoute = selected
-    ? routes.find((r) => r.id === selected.routeId)
-    : undefined;
+  const selectedRoute = selected ? routes.find((r) => r.id === selected.routeId) : undefined;
 
   return (
     <div style={{ width: '100%', height: '70vh', borderRadius: 12, overflow: 'hidden' }}>
@@ -144,15 +120,11 @@ export default function RoutesMapGoogle() {
 
           {/* Info popup when clicking marker */}
           {selected && selectedRoute && (
-            <InfoWindow
-              position={selected.position}
-              onCloseClick={() => setSelected(null)}
-            >
+            <InfoWindow position={selected.position} onCloseClick={() => setSelected(null)}>
               <div style={{ maxWidth: 220 }}>
                 <h6 style={{ marginBottom: 4 }}>{selectedRoute.name}</h6>
                 <p style={{ marginBottom: 4 }}>
                   Distance:
-                  {' '}
                   {selectedRoute.distanceKm}
                   {' '}
                   km
