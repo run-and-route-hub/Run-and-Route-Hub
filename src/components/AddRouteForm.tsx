@@ -177,7 +177,12 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode('start')}
-                  style={{ padding: '6px 12px', marginRight: 8 }}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                  }}
                 >
                   {route.start ? 'Change Start' : 'Select Start'}
                 </button>
@@ -186,9 +191,15 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode('end')}
-                  style={{ padding: '6px 12px', marginRight: 8 }}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                  }}
                 >
                   {route.end ? 'Change End' : 'Select End'}
+
                 </button>
               )}
               {(route.start || route.end) && (
@@ -198,7 +209,12 @@ const AddRouteForm: React.FC = () => {
                     setRoute((prev) => ({ ...prev, start: null, end: null }));
                     setSelectionMode(null);
                   }}
-                  style={{ padding: '6px 12px' }}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                  }}
                 >
                   Clear Both
                 </button>
@@ -226,10 +242,32 @@ const AddRouteForm: React.FC = () => {
         )}
 
         <div>
-          <button type="submit" disabled={loading} style={{ padding: '8px 16px' }}>
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              padding: '0.3rem 0.7rem',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              marginRight: '1rem',
+            }}
+
+          >
+
             {loading ? 'Saving…' : 'Create Route'}
+
           </button>
-          <button type="button" onClick={() => router.back()} style={{ marginLeft: 8, padding: '8px 16px' }}>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            style={{
+              padding: '0.3rem 0.7rem',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+            }}
+          >
             Cancel
           </button>
         </div>
