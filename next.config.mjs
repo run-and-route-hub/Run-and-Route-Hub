@@ -5,7 +5,7 @@ export default nextConfig;
 
 
 // next.config.js
-module.exports = {
+export default = {
   eslint: {
     ignoreDuringBuilds: true,
   },
