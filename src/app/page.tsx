@@ -25,7 +25,7 @@ const Home = () => (
           </p>
 
           <div className="d-flex flex-column flex-sm-row justify-content-center gap-2">
-            <Button href="/list" variant="success">
+            <Button href="/find-run" variant="success">
               Find a Route
             </Button>
             <Button href="/findbuddy" variant="outline-success">
