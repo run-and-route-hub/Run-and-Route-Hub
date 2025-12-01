@@ -19,6 +19,7 @@ async function main() {
         role,
       },
     });
+    // s
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
   for (const data of config.defaultData) {
