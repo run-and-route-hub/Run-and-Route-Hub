@@ -11,7 +11,7 @@ const Home = () => (
             src="/profile/therunhub.png"
             alt="Run & Route Hub logo"
             className="mb-3"
-            style={{ maxWidth: '180px', width: '100%', height: 'auto' }}
+            style={{ maxWidth: '100px', width: '100%', height: 'auto' }}
           />
           <h1 className="fw-bold mb-3">Run &amp; Route Hub</h1>
           <p className="lead text-muted mb-3">
