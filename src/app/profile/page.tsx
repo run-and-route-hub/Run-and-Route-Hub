@@ -18,7 +18,7 @@ export default function ProfilePage() {
     totalMilesMonth: 42.7,
     totalRunsMonth: 11,
     avgPace: '8:05 /mi',
-    fastestMile: ':14',
+    fastestMile: '5:14',
     streakDays: 6,
   };
 

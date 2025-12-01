@@ -16,17 +16,16 @@ export const EditStuffSchema = Yup.object({
 });
 export const AddRouteSchema = Yup.object({
   name: Yup.string().required(),
-  color: Yup.string().optional(),
   path: Yup.array().of(Yup.object({
     lat: Yup.number().required(),
     lng: Yup.number().required(),
-  })),
+  })).optional(),
   start: Yup.object({
     lat: Yup.number().required(),
     lng: Yup.number().required(),
-  }).optional(),
+  }).required(),
   end: Yup.object({
     lat: Yup.number().required(),
     lng: Yup.number().required(),
-  }).optional(),
+  }).required(),
 });

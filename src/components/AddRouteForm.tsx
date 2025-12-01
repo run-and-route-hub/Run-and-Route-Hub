@@ -8,11 +8,27 @@ import { useRouter } from 'next/navigation';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { addRoute } from '@/lib/dbActions';
 import { AddRouteSchema } from '@/lib/validationSchemas';
 
-// the adding part is not yet configurable until our database is set up
+function getStraightLineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // Radius of the Earth in kilometers (you can use 3959 for miles)
+
+  // Convert degrees to radians
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+    + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const distance = R * c; // Distance in kilometers
+
+  return distance;
+}
 
 const AddRouteForm: React.FC = () => {
   // console.log('AddStuffForm', status, session);
@@ -22,7 +38,11 @@ const AddRouteForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<any>({
-    resolver: yupResolver(AddRouteSchema),
+    resolver: yupResolver(
+      Yup.object({
+        name: Yup.string().required('Route name is required'),
+      }),
+    ),
   });
   const router = useRouter();
   const [route, setRoute] = useState<Record<string, any>>({
@@ -58,22 +78,31 @@ const AddRouteForm: React.FC = () => {
     [selectionMode],
   );
 
-  async function onSubmit(formData: any) {
+  const handleFormSubmit = rhfHandleSubmit(async (formData: any) => {
     setError(null);
 
     if (!route.start || !route.end) {
-      setError('Please provide a start location and an end location by clicking the map.');
+      const errorMsg = 'Please provide a start location and an end location by clicking the map.';
+      setError(errorMsg);
+      console.error(errorMsg);
       return;
     }
-
     setLoading(true);
+    const pathlist = route.path.map((value: { lat: any; lng: any }) => ({ lat: value.lat, lng: value.lng })) || [];
+    pathlist.unshift({ lat: route.start.lat, lng: route.start.lng });
+    pathlist.push({ lat: route.end.lat, lng: route.end.lng });
+    let distanceKm = 0;
+    for (let i = 0; i < pathlist.length - 1; i++) {
+      distanceKm += getStraightLineDistance(pathlist[i].lat, pathlist[i].lng, pathlist[i + 1].lat, pathlist[i + 1].lng);
+    }
+    const distanceMile = distanceKm * 0.621371;
     try {
       // combine form data with map-selected coordinates
       const payload = {
         name: formData.name,
-        start: route.start,
-        end: route.end,
-        path: route.path || [],
+        distanceMile,
+        distanceKm,
+        path: pathlist,
       };
 
       await addRoute(payload);
@@ -86,13 +115,13 @@ const AddRouteForm: React.FC = () => {
       setError(err?.message || 'An error occurred');
       setLoading(false);
     }
-  }
+  });
 
   return (
     <main style={{ maxWidth: 720, margin: '2rem auto', padding: '0 1rem' }}>
       <h1>Add Route</h1>
 
-      <form onSubmit={rhfHandleSubmit(onSubmit)} aria-describedby="form-error">
+      <form onSubmit={handleFormSubmit} aria-describedby="form-error">
         <div style={{ marginBottom: 12 }}>
           <label>
             Name
@@ -148,7 +177,12 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode('start')}
-                  style={{ padding: '6px 12px', marginRight: 8 }}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                  }}
                 >
                   {route.start ? 'Change Start' : 'Select Start'}
                 </button>
@@ -157,9 +191,15 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode('end')}
-                  style={{ padding: '6px 12px', marginRight: 8 }}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                  }}
                 >
                   {route.end ? 'Change End' : 'Select End'}
+
                 </button>
               )}
               {(route.start || route.end) && (
@@ -169,7 +209,12 @@ const AddRouteForm: React.FC = () => {
                     setRoute((prev) => ({ ...prev, start: null, end: null }));
                     setSelectionMode(null);
                   }}
-                  style={{ padding: '6px 12px' }}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                  }}
                 >
                   Clear Both
                 </button>
@@ -197,10 +242,32 @@ const AddRouteForm: React.FC = () => {
         )}
 
         <div>
-          <button type="submit" disabled={loading} style={{ padding: '8px 16px' }}>
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              padding: '0.3rem 0.7rem',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              marginRight: '1rem',
+            }}
+
+          >
+
             {loading ? 'Saving…' : 'Create Route'}
+
           </button>
-          <button type="button" onClick={() => router.back()} style={{ marginLeft: 8, padding: '8px 16px' }}>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            style={{
+              padding: '0.3rem 0.7rem',
+              borderRadius: '999px',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+            }}
+          >
             Cancel
           </button>
         </div>

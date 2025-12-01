@@ -24,11 +24,24 @@ export async function createUser(credentials: { email: string; password: string 
  */
 export async function addRoute(route: {
   name: string,
-  color?: string,
-  path: google.maps.LatLngLiteral[],
-  start?: google.maps.LatLngLiteral,
-  end?: google.maps.LatLngLiteral }) {
+  distanceKm: number,
+  distanceMile: number,
+  path: { lat: number, lng: number }[]
+}) {
   console.log(route);
+  await prisma.route.create({
+    data: {
+      name: route.name,
+      colorr: Math.floor(Math.random() * 256),
+      colorg: Math.floor(Math.random() * 256),
+      colorb: Math.floor(Math.random() * 256),
+      distanceKm: route.distanceKm,
+      distanceMile: route.distanceMile,
+      path: {
+        create: route.path.map((p) => ({ lat: p.lat, lng: p.lng })),
+      },
+    },
+  });
   // After adding, redirect to the list page
   redirect('/routes');
 }
