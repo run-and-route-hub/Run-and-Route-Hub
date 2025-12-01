@@ -3,12 +3,50 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  // for local development
-  // url      = env("DATABASE_URL")
-  // for Vercel
-  url       = env("POSTGRES_PRISMA_URL")
-  //directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+}
+
+model Stuff {
+  id        Int       @id @default(autoincrement())
+  name      String
+  quantity  Int
+  condition Condition @default(good)
+  owner     String
+}
+
+model Location {
+  id      Int    @id @default(autoincrement())
+  lat     Float
+  lng     Float
+  routeId Int?
+  route   Route? @relation(fields: [routeId], references: [id])
+}
+
+model Route {
+  id           Int        @id @default(autoincrement())
+  name         String
+  distanceKm   Float
+  distanceMile Float
+  colorr       Int
+  colorg       Int
+  colorb       Int
+  path         Location[]
+}
+
+model Run {
+  id         Int    @id @default(autoincrement())
+  location   String
+  distance   Int
+  pace       String
+  difficulty String
 }
 
 enum Role {
@@ -21,39 +59,4 @@ enum Condition {
   good
   fair
   poor
-}
-
-model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  role     Role    @default(USER)
-}
-
-model Stuff {
-  id        Int       @id @default(autoincrement())
-  name      String
-  quantity  Int
-  condition Condition @default(good)
-  owner     String
-}
-
-
-model Location {
-  id      Int    @id @default(autoincrement())
-  lat     Float
-  lng     Float
-  route   Route? @relation(fields: [routeId], references: [id])
-  routeId Int?
-}
-
-model Route {
-  id         Int        @id @default(autoincrement())
-  name       String
-  distanceKm Float
-  distanceMile Float
-  colorr      Int
-  colorg      Int
-  colorb      Int
-  path       Location[]
 }

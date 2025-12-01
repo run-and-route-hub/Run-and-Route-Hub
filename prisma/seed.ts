@@ -36,6 +36,30 @@ async function main() {
       },
     });
   }
+  // new run data seed — added safely here
+  console.log('Seeding run data...');
+  await prisma.run.createMany({
+    data: [
+      {
+        location: 'Kapiolani Park',
+        distance: 3,
+        pace: 'moderate',
+        difficulty: 'easy',
+      },
+      {
+        location: 'Diamond Head Trail',
+        distance: 5,
+        pace: 'fast',
+        difficulty: 'hard',
+      },
+      {
+        location: 'Ala Moana Beach Park',
+        distance: 4,
+        pace: 'slow',
+        difficulty: 'moderate',
+      },
+    ],
+  });
 }
 main()
   .then(() => prisma.$disconnect())

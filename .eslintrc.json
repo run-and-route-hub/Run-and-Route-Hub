@@ -5,6 +5,10 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "ignorePatterns": [
+    "next.config.js",
+    "next.config.mjs"
+  ],
   "rules": {
     "arrow-parens": "off",
     "func-names": "off",
@@ -20,6 +24,14 @@
     "react/function-component-definition": "off",
     "react/jsx-props-no-spreading": "off",
     "react/one-expression-per-line": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/button-has-type": "off",
+    "react/no-array-index-key": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "max-len": ["error", { "code": 120, "ignoreStrings": true, "ignoreTemplateLiterals": true }]
   }
 }
+
+
