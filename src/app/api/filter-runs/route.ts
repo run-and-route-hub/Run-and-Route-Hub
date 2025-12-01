@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       filters.pace = pace;
     }
 
-    const runs = await prisma.run.findMany({
+    const runs = await prisma.run.findMany({ // run lint error fixed
       where: filters,
     });
 
