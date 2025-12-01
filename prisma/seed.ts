@@ -8,7 +8,7 @@ async function main() {
   console.log('Seeding the database');
   const password = await hash('changeme', 10);
   config.defaultAccounts.forEach(async (account) => {
-    const role = account.role as Role || Role.USER;
+    const role = (account.role as Role) || Role.USER;
     console.log(`  Creating user: ${account.email} with role: ${role}`);
     await prisma.user.upsert({
       where: { email: account.email },
@@ -22,7 +22,7 @@ async function main() {
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
   for (const data of config.defaultData) {
-    const condition = data.condition as Condition || Condition.good;
+    const condition = (data.condition as Condition) || Condition.good;
     console.log(`  Adding stuff: ${JSON.stringify(data)}`);
     // eslint-disable-next-line no-await-in-loop
     await prisma.stuff.upsert({
@@ -60,38 +60,41 @@ async function main() {
       },
     ],
   });
-}
-await prisma.route.createMany({
-    data: [
-      {
-        name: 'Sample Route 1',
-        colorr: 255,
-        colorg: 0,
-        colorb: 0,
-        distanceKm: 5,
-        distanceMile: 3.1,
-        path: { create: [
+  // new route data seed — added safely here
+  console.log('Seeding route data...');
+  await prisma.route.create({
+    data: {
+      name: 'Sample Route 1',
+      colorr: 255,
+      colorg: 0,
+      colorb: 0,
+      distanceKm: 5,
+      distanceMile: 3.1,
+      path: {
+        create: [
           { lat: 21.3069, lng: -157.8583 },
-          { lat: 21.3070, lng: -157.8590 },
-          { lat: 21.3080, lng: -157.8600 },
+          { lat: 21.307, lng: -157.859 },
+          { lat: 21.308, lng: -157.86 },
         ],
-      }
       },
-      {
-        name: 'Sample Route 2',
-        colorr: 0,
-        colorg: 255,
-        colorb: 0,
-        distanceKm: 10,
-        distanceMile: 6.2,
-        path: { create: [
+    },
+  });
+  await prisma.route.create({
+    data: {
+      name: 'Sample Route 2',
+      colorr: 0,
+      colorg: 255,
+      colorb: 0,
+      distanceKm: 10,
+      distanceMile: 6.2,
+      path: {
+        create: [
           { lat: 21.3069, lng: -157.8583 },
-          { lat: 21.3100, lng: -157.8620 },
-          { lat: 21.3150, lng: -157.8650 },
+          { lat: 21.31, lng: -157.862 },
+          { lat: 21.315, lng: -157.865 },
         ],
-        }
       },
-    ],
+    },
   });
 }
 main()
