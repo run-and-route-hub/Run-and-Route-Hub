@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 // eslint-disable-next-line import/no-named-as-default
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(req: Request) {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       filters.pace = pace;
     }
 
-    const runs = await prisma.run.findMany({
+    const runs = await prisma.Run.findMany({
       where: filters,
     });
 

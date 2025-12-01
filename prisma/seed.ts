@@ -38,7 +38,7 @@ async function main() {
   }
   // ✅ Your new run data seed — added safely here
   console.log('Seeding run data...');
-  await prisma.run.createMany({
+  await prisma.Run.createMany({
     data: [
       {
         location: 'Kapiolani Park',
