@@ -9,19 +9,56 @@ export type StatsOverviewProps = {
 function StatCard({
   label,
   value,
+  helper,
 }: {
   label: string;
   value: string | number;
+  // eslint-disable-next-line react/require-default-props
+  helper?: string;
 }) {
   return (
-    <div className="relative rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5">
-      <div className="absolute left-0 top-0 h-1 w-full rounded-t-2xl bg-gradient-to-r from-gray-900 to-gray-400" />
-      <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
+    <div
+      style={{
+        border: '1px solid #e0e0e0',
+        borderRadius: '0.75rem',
+        padding: '0.85rem 1rem',
+        backgroundColor: '#ffffff',
+      }}
+    >
+      {/* Label */}
+      <p
+        style={{
+          fontSize: '0.9rem',
+          fontWeight: 500,
+          marginBottom: 4,
+        }}
+      >
         {label}
       </p>
-      <p className="mt-2 text-2xl font-bold text-gray-900">
+
+      {/* Value */}
+      <p
+        style={{
+          fontSize: '1.4rem',
+          fontWeight: 600,
+          marginBottom: helper ? 4 : 0,
+        }}
+      >
         {value}
       </p>
+
+      {/* Helper */}
+      {helper && (
+        <p
+          style={{
+            fontSize: '0.85rem',
+            color: '#666',
+            margin: 0,
+          }}
+        >
+          {helper}
+        </p>
+      )}
     </div>
   );
 }
@@ -34,26 +71,37 @@ export default function StatsOverview({
   streakDays,
 }: StatsOverviewProps) {
   return (
-    <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    <section
+      style={{
+        display: 'grid',
+        gap: '1rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+      }}
+    >
       <StatCard
         label="Miles this month"
         value={totalMilesMonth.toFixed(1)}
+        helper="Total distance in the last 30 days"
       />
       <StatCard
         label="Runs this month"
         value={totalRunsMonth}
+        helper="Sessions logged"
       />
       <StatCard
         label="Avg pace"
         value={avgPace}
+        helper="Per mile over all runs"
       />
       <StatCard
-        label="Fastest Mile"
+        label="Fastest mile"
         value={fastestMile}
+        helper="Best recorded split"
       />
       <StatCard
         label="Streak"
         value={`${streakDays} days`}
+        helper="Consecutive active days"
       />
     </section>
   );
