@@ -1,130 +1,145 @@
-export default function FindRunMockupPage() {
+'use client';
+import React, { useState } from 'react';
+
+export default function FindRunPage() {
+  const [difficulty, setDifficulty] = useState('');
+  const [minDistance, setMinDistance] = useState('');
+  const [pace, setPace] = useState('');
+
+  const fetchRuns = () => {
+    console.log('Searching with filters:');
+    console.log('Difficulty:', difficulty);
+    console.log('Min Distance:', minDistance);
+    console.log('Pace:', pace);
+    // TODO: Replace this with actual fetch call to your backend or API
+  };
+
   return (
     <main>
-      <div style={{ maxWidth: '96rem', margin: '0 auto', padding: '2.5rem 1.5rem' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Page Title */}
-        <h1 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '2rem' }}>Find Run Page</h1>
+        <h1 style={{ fontSize: '36px', fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>
+          Find Run Page
+        </h1>
 
         {/* Explanation Section */}
-        <div style={{ marginBottom: '2.5rem' }}>
-          <p style={{ fontSize: '1.125rem', color: '#374151' }}>
-            Explore available running routes submitted by other users.
-            Each run includes details such as location, distance, pace,
-            and difficulty level—all sourced from the live database.
+        <div style={{ marginBottom: '40px', textAlign: 'center' }}>
+          <p style={{ fontSize: '18px', color: '#4B5563' }}>
+            Browse available runs submitted by other users. Each run includes a location, distance, pace, and estimated difficulty. Use the filters below to find runs that match your preferences.
           </p>
         </div>
 
         {/* Filter Section */}
-        <div style={{ marginBottom: '3.5rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem' }}>Filter Runs</h2>
+        <div style={{ marginBottom: '30px' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '15px', textAlign: 'center' }}>
+            Filter Runs
+          </h2>
 
-          {/* Difficulty */}
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="difficulty" style={{ fontWeight: '500', color: '#1f2937' }}>
-              Difficulty Level:
-            </label>
-            <select
-              id="difficulty"
-              style={{
-                marginLeft: '15px',
-                padding: '8px',
-                borderRadius: '6px',
-                textAlign: 'center',
-              }}
-            >
-              <option>Any</option>
-              <option>Easy</option>
-              <option>Moderate</option>
-              <option>Hard</option>
-            </select>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '24px',
+              justifyContent: 'center',
+            }}
+          >
+            {/* Difficulty */}
+            <div>
+              <label htmlFor="difficulty" style={{ display: 'block', fontWeight: '500', marginBottom: '5px' }}>
+                Difficulty Level:
+              </label>
+              <select
+                id="difficulty"
+                value={difficulty}
+                onChange={(e) => setDifficulty(e.target.value)}
+                style={{
+                  marginLeft: '15px',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  textAlign: 'center',
+                  width: '80%',
+                }}
+              >
+                <option value="">Any</option>
+                <option value="easy">Easy</option>
+                <option value="moderate">Moderate</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+
+            {/* Minimum Distance */}
+            <div>
+              <label htmlFor="minDistance" style={{ display: 'block', fontWeight: '500', marginBottom: '5px' }}>
+                Minimum Distance:
+              </label>
+              <select
+                id="minDistance"
+                value={minDistance}
+                onChange={(e) => setMinDistance(e.target.value)}
+                style={{
+                  marginLeft: '15px',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  textAlign: 'center',
+                  width: '80%',
+                }}
+              >
+                <option value="">Any</option>
+                <option value="1">1 mile</option>
+                <option value="2">2 miles</option>
+                <option value="3">3 miles</option>
+                <option value="4">4 miles</option>
+                <option value="5">5 miles</option>
+              </select>
+            </div>
+
+            {/* Preferred Pace */}
+            <div>
+              <label htmlFor="pace" style={{ display: 'block', fontWeight: '500', marginBottom: '5px' }}>
+                Preferred Pace:
+              </label>
+              <select
+                id="pace"
+                value={pace}
+                onChange={(e) => setPace(e.target.value)}
+                style={{
+                  marginLeft: '15px',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  textAlign: 'center',
+                  width: '80%',
+                }}
+              >
+                <option value="">Any</option>
+                <option value="slow">Slow</option>
+                <option value="moderate">Moderate</option>
+                <option value="fast">Fast</option>
+              </select>
+            </div>
           </div>
 
-          {/* Minimum Distance */}
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="minDistance" style={{ fontWeight: '500', color: '#1f2937' }}>
-              Minimum Distance:
-            </label>
-            <select
-              id="minDistance"
+          {/* Search Button */}
+          <div style={{ textAlign: 'center', marginTop: '30px' }}>
+            <button
+              onClick={fetchRuns}
               style={{
-                marginLeft: '15px',
-                padding: '8px',
+                padding: '10px 24px',
+                fontSize: '16px',
                 borderRadius: '6px',
-                textAlign: 'center',
+                backgroundColor: '#0070f3',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
               }}
             >
-              <option>Any</option>
-              <option>1 mile</option>
-              <option>2 miles</option>
-              <option>3 miles</option>
-              <option>4 miles</option>
-              <option>5 miles</option>
-            </select>
-          </div>
-
-          {/* Preferred Pace */}
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="pace" style={{ fontWeight: '500', color: '#1f2937' }}>
-              Preferred Pace:
-            </label>
-            <select
-              id="pace"
-              style={{
-                marginLeft: '15px',
-                padding: '8px',
-                borderRadius: '6px',
-                textAlign: 'center',
-              }}
-            >
-              <option>Any</option>
-              <option>Slow</option>
-              <option>Moderate</option>
-              <option>Fast</option>
-            </select>
+              Search
+            </button>
           </div>
         </div>
 
-        {/* Run Cards */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
-          }}
-        >
-          {[1, 2, 3].map((_, idx) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={idx}>
-              <div
-                style={{
-                  border: '1px solid #d1d5db',
-                  padding: '1.5rem',
-                  borderRadius: '1rem',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-                  transition: 'box-shadow 0.2s ease',
-                }}
-              >
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.75rem' }}>
-                  Run Location
-                </h3>
-
-                <p style={{ color: '#374151' }}>
-                  Distance:
-                  <span style={{ fontWeight: '500' }}> X miles </span>
-                </p>
-
-                <p style={{ color: '#374151' }}>
-                  Pace:
-                  <span style={{ fontWeight: '500' }}> XX:XX </span>
-                </p>
-
-                <p style={{ color: '#374151' }}>
-                  Difficulty:
-                  <span style={{ fontWeight: '500' }}> Level </span>
-                </p>
-              </div>
-            </div>
-          ))}
+        {/* Placeholder for Run Cards */}
+        <div style={{ marginTop: '40px', textAlign: 'center', color: '#9CA3AF' }}>
+          <p>Run results will appear here after you search.</p>
         </div>
       </div>
     </main>
