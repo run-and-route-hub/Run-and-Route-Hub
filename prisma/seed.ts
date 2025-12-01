@@ -56,7 +56,7 @@ async function main() {
         location: 'Ala Moana Beach Park',
         distance: 4,
         pace: 'slow',
-        difficulty: 'medium',
+        difficulty: 'moderate',
       },
     ],
   });
