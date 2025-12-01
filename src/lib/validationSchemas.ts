@@ -14,3 +14,18 @@ export const EditStuffSchema = Yup.object({
   condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
   owner: Yup.string().required(),
 });
+export const AddRouteSchema = Yup.object({
+  name: Yup.string().required(),
+  path: Yup.array().of(Yup.object({
+    lat: Yup.number().required(),
+    lng: Yup.number().required(),
+  })).optional(),
+  start: Yup.object({
+    lat: Yup.number().required(),
+    lng: Yup.number().required(),
+  }).required(),
+  end: Yup.object({
+    lat: Yup.number().required(),
+    lng: Yup.number().required(),
+  }).required(),
+});
