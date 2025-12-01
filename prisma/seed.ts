@@ -60,42 +60,6 @@ async function main() {
       },
     ],
   });
-  // new route data seed — added safely here
-  console.log('Seeding route data...');
-  await prisma.route.create({
-    data: {
-      name: 'Sample Route 1',
-      colorr: 255,
-      colorg: 0,
-      colorb: 0,
-      distanceKm: 5,
-      distanceMile: 3.1,
-      path: {
-        create: [
-          { lat: 21.3069, lng: -157.8583 },
-          { lat: 21.307, lng: -157.859 },
-          { lat: 21.308, lng: -157.86 },
-        ],
-      },
-    },
-  });
-  await prisma.route.create({
-    data: {
-      name: 'Sample Route 2',
-      colorr: 0,
-      colorg: 255,
-      colorb: 0,
-      distanceKm: 10,
-      distanceMile: 6.2,
-      path: {
-        create: [
-          { lat: 21.3069, lng: -157.8583 },
-          { lat: 21.31, lng: -157.862 },
-          { lat: 21.315, lng: -157.865 },
-        ],
-      },
-    },
-  });
 }
 main()
   .then(() => prisma.$disconnect())
