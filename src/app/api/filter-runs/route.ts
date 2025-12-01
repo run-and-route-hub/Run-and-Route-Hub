@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(req: Request) {
   try {
-    const { difficulty, minDistance, pace } = await req.json(); //
+    const { difficulty, minDistance, pace } = await req.json();
     console.log('Filters received in backend:', { difficulty, minDistance, pace });
 
     const filters: any = {};
