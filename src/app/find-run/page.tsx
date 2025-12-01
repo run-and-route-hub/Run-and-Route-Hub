@@ -30,7 +30,7 @@ export default function FindRunPage() {
         }),
       });
 
-      if (!res.ok) throw new Error('API call failed');
+      if (!res.ok) throw new Error('API call failed'); //
 
       const data = await res.json();
       setResults(data.runs || []); // Assumes your backend returns just an array, not { runs: [...] }
@@ -56,7 +56,7 @@ export default function FindRunPage() {
         </div>
 
         {/* Filters */}
-        <div style={{ marginBottom: '30px' }}>
+        <div style={{ marginBottom: '30px' }}> 
           <h2 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '15px', textAlign: 'center' }}>
             Filter Runs
           </h2>
