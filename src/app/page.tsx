@@ -1,17 +1,14 @@
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { PeopleFill, Activity, MapFill } from 'react-bootstrap-icons';
 
-/** The Home page. */
 const Home = () => (
   <main className="py-5">
     <Container id="landing-page">
 
-      {/* Hero Section */}
       <Row className="justify-content-center text-center mb-5">
         <Col lg={8}>
-          {/* Logo in the middle */}
           <img
-            src="/therunhub.png"
+            src="/profile/therunhub.png"
             alt="Run & Route Hub logo"
             className="mb-3"
             style={{ maxWidth: '180px', width: '100%', height: 'auto' }}
@@ -27,7 +24,6 @@ const Home = () => (
             to run with.
           </p>
 
-          {/* Call-to-action buttons */}
           <div className="d-flex flex-column flex-sm-row justify-content-center gap-2">
             <Button href="/list" variant="success">
               Find a Route
@@ -42,10 +38,8 @@ const Home = () => (
         </Col>
       </Row>
 
-      {/* Feature Cards */}
       <Row className="g-4">
 
-        {/* Find Running Buddies */}
         <Col md={6} lg={4}>
           <div className="h-100 p-4 bg-white rounded-3 shadow-sm text-center">
             <PeopleFill size={48} className="mb-3" />
@@ -57,7 +51,6 @@ const Home = () => (
           </div>
         </Col>
 
-        {/* Log & Track Runs */}
         <Col md={6} lg={4}>
           <div className="h-100 p-4 bg-white rounded-3 shadow-sm text-center">
             <Activity size={48} className="mb-3" />
@@ -69,7 +62,6 @@ const Home = () => (
           </div>
         </Col>
 
-        {/* Discover Community Routes */}
         <Col md={12} lg={4}>
           <div className="h-100 p-4 bg-white rounded-3 shadow-sm text-center">
             <MapFill size={48} className="mb-3" />
