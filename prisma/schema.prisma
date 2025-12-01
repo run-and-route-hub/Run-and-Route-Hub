@@ -57,3 +57,11 @@ model Route {
   colorb      Int
   path       Location[]
 }
+
+model Run {
+  id         Int      @id @default(autoincrement())
+  location   String
+  distance   Int
+  pace       String
+  difficulty String
+}
