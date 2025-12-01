@@ -61,6 +61,39 @@ async function main() {
     ],
   });
 }
+await prisma.route.createMany({
+    data: [
+      {
+        name: 'Sample Route 1',
+        colorr: 255,
+        colorg: 0,
+        colorb: 0,
+        distanceKm: 5,
+        distanceMile: 3.1,
+        path: { create: [
+          { lat: 21.3069, lng: -157.8583 },
+          { lat: 21.3070, lng: -157.8590 },
+          { lat: 21.3080, lng: -157.8600 },
+        ],
+      }
+      },
+      {
+        name: 'Sample Route 2',
+        colorr: 0,
+        colorg: 255,
+        colorb: 0,
+        distanceKm: 10,
+        distanceMile: 6.2,
+        path: { create: [
+          { lat: 21.3069, lng: -157.8583 },
+          { lat: 21.3100, lng: -157.8620 },
+          { lat: 21.3150, lng: -157.8650 },
+        ],
+        }
+      },
+    ],
+  });
+}
 main()
   .then(() => prisma.$disconnect())
   .catch(async (e) => {
