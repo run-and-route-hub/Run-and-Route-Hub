@@ -24,14 +24,24 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Start Next.js server
+        run: npm run start &
+        env:
+          PORT: 3000
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000
+
       - name: Run ESLint
         run: npm run lint
 
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          TEST_URL: https://run-route-hub.vercel.app
-
+          BASE_URL: http://localhost:3000
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
