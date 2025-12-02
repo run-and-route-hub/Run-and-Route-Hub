@@ -25,13 +25,13 @@ jobs:
         run: npx playwright install --with-deps
 
 
-      - name: Vercel Action
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+      - name: Start local server
+            run: npm run build && npm run start &
+
+      - name: Run Playwright tests
+        env:
+          TEST_URL: http://localhost:3000
+        run: npx playwright test --project=chromium
 
       - name: Run ESLint
         run: npm run lint
