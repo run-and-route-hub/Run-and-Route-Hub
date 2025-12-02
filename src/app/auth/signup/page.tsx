@@ -89,12 +89,31 @@ const SignUp = () => {
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
+                        <Button
+                          style={{
+                            padding: '0.3rem 0.7rem',
+                            borderRadius: '999px',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                          }}
+                          type="submit"
+                          className="btn btn-primary"
+                        >
                           Register
                         </Button>
                       </Col>
                       <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
+                        <Button
+                          style={{
+                            padding: '0.3rem 0.7rem',
+                            borderRadius: '999px',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                          }}
+                          type="button"
+                          onClick={() => reset()}
+                          className="btn btn-warning float-right"
+                        >
                           Reset
                         </Button>
                       </Col>
