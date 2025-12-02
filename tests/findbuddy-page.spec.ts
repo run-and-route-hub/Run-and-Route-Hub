@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:3000/findbuddy');
+  await page.goto('https://your-vercel-domain.vercel.app/findbuddy', { waitUntil: 'domcontentloaded' });
   await expect(
     page.getByRole('heading', { name: 'Find Running Buddy' }),
   ).toBeVisible();
