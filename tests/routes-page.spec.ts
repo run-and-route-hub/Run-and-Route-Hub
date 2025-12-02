@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 
+const baseURL = process.env.TEST_URL || 'http://localhost:3000';
+
 test('test', async ({ page }) => {
-  await page.goto('https://your-vercel-domain.vercel.app/routes', { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/routes`);
   await expect(
     page.getByRole('heading', { name: 'Routes' }),
   ).toBeVisible();

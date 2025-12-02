@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 
+const baseURL = process.env.TEST_URL || 'http://localhost:3000';
+
 test('test', async ({ page }) => {
-  await page.goto('https://your-vercel-domain.vercel.app/find-run', { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/find-run`);
   const heading = page.getByRole('heading', { name: 'Find Run' });
   await heading.waitFor({ state: 'visible', timeout: 60000 });
   await expect(heading).toBeVisible();
