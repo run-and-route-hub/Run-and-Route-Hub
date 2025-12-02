@@ -1,20 +1,10 @@
 import { test } from '@playwright/test';
-
-test.use({ storageState: 'john-auth.json' });
+import TEST_URL from './setup';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:3000/routes');
-  await page.getByRole('button', { name: 'OK' }).nth(1).click();
-  await page.getByRole('button', { name: 'Zoom out' }).dblclick();
-  await page.getByRole('button', { name: 'Zoom out' }).click();
-  await page.getByRole('button', { name: 'Move up' }).click();
-  await page.getByRole('button', { name: 'Move up' }).click();
-  await page.getByRole('button', { name: 'Move left' }).click();
-  await page.getByRole('button', { name: 'Move up' }).click();
-  await page.getByRole('button', { name: 'Move left' }).click();
-  await page.getByRole('button', { name: 'Move down' }).click();
-  await page.getByRole('button', { name: 'Move down' }).click();
-  await page.getByRole('button', { name: 'Move right' }).click();
-  await page.getByRole('button', { name: 'Move down' }).click();
+  await page.goto(`${TEST_URL}/routes`, { waitUntil: 'networkidle' });
+  await page.getByRole('heading', { name: 'Routes' }).click();
   await page.getByRole('link', { name: 'Routes' }).click();
+  await page.getByRole('button', { name: 'Map camera controls' }).click();
+  await page.getByRole('button', { name: 'Zoom out' }).click();
 });
