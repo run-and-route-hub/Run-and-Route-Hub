@@ -1,11 +1,14 @@
 name: ci-run-and-route-hub
 
 on:
-push:
-branches: [main, master]
-pull_request:
-branches: [main, master]
-
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
 jobs:
 test:
 runs-on: ubuntu-latest
