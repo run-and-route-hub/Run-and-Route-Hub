@@ -10,12 +10,30 @@ const SignOut = () => (
     <Row>
       <Col xs={4} />
       <Col>
-        <Button variant="danger" onClick={() => signOut({ callbackUrl: '/', redirect: true })}>
+        <Button
+          style={{
+            padding: '0.3rem 0.7rem',
+            borderRadius: '999px',
+            fontSize: '0.85rem',
+            cursor: 'pointer',
+          }}
+          variant="danger"
+          onClick={() => signOut({ callbackUrl: '/', redirect: true })}
+        >
           Sign Out
         </Button>
       </Col>
       <Col>
-        <Button variant="secondary" href="/">
+        <Button
+          style={{
+            padding: '0.3rem 0.7rem',
+            borderRadius: '999px',
+            fontSize: '0.85rem',
+            cursor: 'pointer',
+          }}
+          variant="secondary"
+          href="/"
+        >
           Cancel
         </Button>
       </Col>

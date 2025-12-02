@@ -45,7 +45,17 @@ const SignIn = () => {
                     <Form.Label>Password</Form.Label>
                     <input name="password" type="password" className="form-control" />
                   </Form.Group>
-                  <Button type="submit" className="mt-3">
+                  <Button
+                    style={{
+                      padding: '0.3rem 0.7rem',
+                      borderRadius: '999px',
+                      fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      backgroundColor: '#3e633e',
+                    }}
+                    type="submit"
+                    className="mt-3"
+                  >
                     Sign in
                   </Button>
                 </Form>
@@ -53,7 +63,7 @@ const SignIn = () => {
               <Card.Footer>
                 Don&apos;t have an account?
                 {/* turn into link */}
-                <Link href="/auth/signup">Sign up</Link>
+                <Link href="/auth/signup"> Sign up</Link>
               </Card.Footer>
             </Card>
           </Col>
