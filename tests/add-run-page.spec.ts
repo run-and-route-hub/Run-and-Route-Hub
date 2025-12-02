@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('test', async ({ page }) => {
   await page.goto('http://localhost:3000/auth/signin');
@@ -8,14 +8,21 @@ test('test', async ({ page }) => {
   await page.locator('input[name="password"]').fill('changeme');
   await page.getByRole('button', { name: 'Sign in' }).click();
   await page.getByRole('link', { name: 'Add Run' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).fill('Morning loop');
+  const addRunLink = page.getByRole('link', { name: 'Add Run' });
+  await addRunLink.waitFor({ state: 'visible', timeout: 60000 });
+  await addRunLink.click();
   await page.getByRole('button', { name: 'OK' }).nth(1).dblclick();
+  await page.getByRole('button', { name: 'Map camera controls' }).click();
+  await page.getByRole('button', { name: 'Zoom out' }).click();
+  await page.getByRole('button', { name: 'Zoom in' }).click();
+  await page.getByRole('button', { name: 'Move left' }).click();
+  await page.getByRole('button', { name: 'Move up' }).click();
+  await page.getByRole('button', { name: 'Move right' }).click();
+  await page.getByRole('button', { name: 'Move down' }).click();
+  await page.getByRole('button', { name: 'Zoom out' }).dblclick();
+  await page.getByRole('textbox', { name: 'Name' }).click();
+  await page.getByRole('textbox', { name: 'Name' }).fill('Morning Loop');
   await page.getByRole('button', { name: 'Select Start and End Points' }).click();
-  await page.getByRole('button', { name: 'Toggle fullscreen view' }).click();
-  await page.locator('.gm-style > div > div:nth-child(2)').click();
-  await page.locator('.gm-style > div > div:nth-child(2)').click();
-  await page.getByRole('button', { name: 'Toggle fullscreen view' }).click();
-  await page.getByRole('button', { name: 'Create Route' }).click();
-  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  await page.getByRole('link', { name: 'Add Run' }).click();
 });
