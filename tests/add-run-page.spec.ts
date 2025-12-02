@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const baseURL = process.env.TEST_URL || 'http://localhost:3000';
 
@@ -11,9 +11,11 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Sign in' }).click();
   await page.getByRole('link', { name: 'Add Run' }).click();
   const addRunLink = page.getByRole('link', { name: 'Add Run' });
-  await addRunLink.waitFor({ state: 'visible', timeout: 60000 });
+  await expect(addRunLink).toBeVisible({ timeout: 15000 });
   await addRunLink.click();
-  await page.getByRole('button', { name: 'OK' }).nth(1).dblclick();
+  const okButton = page.getByRole('button', { name: 'OK' }).nth(1);
+  await expect(okButton).toBeVisible({ timeout: 15000 });
+  await okButton.dblclick();
   await page.getByRole('button', { name: 'Map camera controls' }).click();
   await page.getByRole('button', { name: 'Zoom out' }).click();
   await page.getByRole('button', { name: 'Zoom in' }).click();
