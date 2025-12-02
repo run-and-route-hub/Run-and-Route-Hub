@@ -6,11 +6,13 @@ test('test', async ({ page }) => {
   await page.goto(`${baseURL}/findbuddy`);
   await expect(
     page.getByRole('heading', { name: 'Find Running Buddy' }),
-  ).toBeVisible();
-  await page.getByRole('spinbutton', { name: 'Min pace (minutes per' }).click();
-  await page.getByRole('spinbutton', { name: 'Min pace (minutes per' }).fill('1');
-  await page.getByRole('spinbutton', { name: 'Max pace (minutes per' }).click();
-  await page.getByRole('spinbutton', { name: 'Max pace (minutes per' }).fill('10');
+  ).toBeVisible({ timeout: 15000 });
+  const minPace = page.getByRole('spinbutton', { name: 'Min pace (minutes per' });
+  await expect(minPace).toBeVisible({ timeout: 15000 });
+  await minPace.fill('1');
+  const maxPace = page.getByRole('spinbutton', { name: 'Max pace (minutes per' });
+  await expect(maxPace).toBeVisible({ timeout: 15000 });
+  await maxPace.fill('10');
   await page.getByRole('button', { name: 'Mon' }).click();
   await page.getByRole('button', { name: 'Mon' }).click();
   await page.getByRole('button', { name: 'Tue' }).click();

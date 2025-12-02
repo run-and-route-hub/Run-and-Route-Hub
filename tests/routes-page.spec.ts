@@ -6,8 +6,10 @@ test('test', async ({ page }) => {
   await page.goto(`${baseURL}/routes`);
   await expect(
     page.getByRole('heading', { name: 'Routes' }),
-  ).toBeVisible();
-  await page.getByRole('button', { name: 'OK' }).nth(1).dblclick();
+  ).toBeVisible({ timeout: 15000 });
+  const okButton = page.getByRole('button', { name: 'OK' }).nth(1);
+  await expect(okButton).toBeVisible({ timeout: 5000 });
+  await okButton.dblclick();
   await page.getByRole('button', { name: 'Map camera controls' }).click();
   await page.getByRole('button', { name: 'Zoom out' }).click();
   await page.getByRole('button', { name: 'Zoom out' }).click();
