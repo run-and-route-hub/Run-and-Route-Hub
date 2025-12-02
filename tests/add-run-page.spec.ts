@@ -1,7 +1,9 @@
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
+
+const baseURL = process.env.TEST_URL || 'http://localhost:3000';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:3000/auth/signin');
+  await page.goto(`${baseURL}/auth/signin`);
   await page.locator('input[name="email"]').click();
   await page.locator('input[name="email"]').fill('john@foo.com');
   await page.locator('input[name="password"]').click();
