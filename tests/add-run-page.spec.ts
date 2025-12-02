@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:3000/auth/signin');
+  await page.goto(`${process.env.TEST_URL}/auth/signin`);
   await page.locator('input[name="email"]').click();
   await page.locator('input[name="email"]').fill('john@foo.com');
   await page.locator('input[name="password"]').click();
