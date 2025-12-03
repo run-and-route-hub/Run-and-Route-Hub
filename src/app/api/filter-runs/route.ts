@@ -60,7 +60,7 @@ const runs = [
 ];
 
 // eslint-disable-next-line import/prefer-default-export
-export async function POST(req: Request) { //
+export async function POST(req: Request) {
   try {
     const { difficulty, minDistance, pace } = await req.json();
 
