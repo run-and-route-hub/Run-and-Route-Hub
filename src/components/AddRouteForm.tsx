@@ -71,8 +71,14 @@ const AddRouteForm: React.FC = () => {
         update('start', coords);
         setSelectionMode('end');
       } else if (selectionMode === 'end') {
+        if (route.end) {
+          let newpath = route.path;
+          newpath = newpath.length > 0 ? newpath : [];
+          newpath.push(route.end);
+          update('path', newpath);
+        }
         update('end', coords);
-        setSelectionMode(null);
+        setSelectionMode('end');
       }
     },
     [selectionMode],
