@@ -245,7 +245,7 @@ const AddRouteForm: React.FC = () => {
               {route.end && <Marker position={route.end} label="E" title="End" />}
               <Polyline
                 // eslint-disable-next-line max-len
-                path={[{ lat: route.start.lat, lng: route.start.lng }, ...route.path.map((point: { lat: number; lng: number }) => ({ lat: point.lat, lng: point.lng })), ...(route.loop ? [{ lat: route.end.lat, lng: route.end.lng }] : [])]}
+                path={[...(route.start ? [{ lat: route.start.lat, lng: route.start.lng }] : []), ...route.path.map((point: { lat: number; lng: number }) => ({ lat: point.lat, lng: point.lng })), ...(route.start && route.loop ? [{ lat: route.end.lat, lng: route.end.lng }] : [])]}
                 options={{
                   strokeColor: '#1d4ed8',
                   strokeWeight: 5,
