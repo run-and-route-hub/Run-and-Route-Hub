@@ -1,39 +1,88 @@
 import { NextResponse } from 'next/server';
-// eslint-disable-next-line import/no-named-as-default
-import { prisma } from '@/lib/prisma';
+
+const runs = [
+  {
+    id: 1,
+    location: 'Kapiolani Park',
+    distance: 3,
+    pace: 'moderate',
+    difficulty: 'easy',
+  },
+  {
+    id: 2,
+    location: 'Diamond Head Trail',
+    distance: 5,
+    pace: 'fast',
+    difficulty: 'hard',
+  },
+  {
+    id: 3,
+    location: 'Ala Moana Beach Park',
+    distance: 4,
+    pace: 'slow',
+    difficulty: 'moderate',
+  },
+  {
+    id: 4,
+    location: 'Manoa Valley Loop',
+    distance: 3.20,
+    pace: 'moderate',
+    difficulty: 'moderate',
+  },
+  {
+    id: 5,
+    location: 'Diamond Head Trail (Short)',
+    distance: 1.60,
+    pace: 'fast',
+    difficulty: 'hard',
+  },
+  {
+    id: 6,
+    location: 'Tantalus Drive',
+    distance: 5.40,
+    pace: 'slow',
+    difficulty: 'hard',
+  },
+  {
+    id: 7,
+    location: 'Ala Moana Beach Path',
+    distance: 2.10,
+    pace: 'slow',
+    difficulty: 'easy',
+  },
+  {
+    id: 8,
+    location: 'Kapiolani Park Loop',
+    distance: 2.80,
+    pace: 'moderate',
+    difficulty: 'easy',
+  },
+];
 
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(req: Request) {
   try {
     const { difficulty, minDistance, pace } = await req.json();
-    console.log('Filters received in backend:', { difficulty, minDistance, pace });
 
-    const filters: any = {};
+    const filtered = runs.filter((run) => {
+      const matchesDifficulty = difficulty
+        ? run.difficulty.toLowerCase() === difficulty.toLowerCase()
+        : true;
 
-    if (difficulty && difficulty !== 'Any') {
-      filters.difficulty = difficulty;
-    }
+      const matchesDistance = minDistance
+        ? run.distance >= parseFloat(minDistance)
+        : true;
 
-    if (minDistance && minDistance !== 'Any') {
-      const min = parseFloat(minDistance);
-      // eslint-disable-next-line no-restricted-globals
-      if (!isNaN(min)) {
-        filters.distance = { gte: min };
-      }
-    }
+      const matchesPace = pace
+        ? run.pace.toLowerCase() === pace.toLowerCase()
+        : true;
 
-    if (pace && pace !== 'Any') {
-      filters.pace = pace;
-    }
-
-    const runs = await prisma.run.findMany({
-      where: filters,
+      return matchesDifficulty && matchesDistance && matchesPace;
     });
 
-    // Wrap the result in a key for frontend compatibility
-    return NextResponse.json({ runs });
+    return NextResponse.json({ runs: filtered });
   } catch (error) {
     console.error('API error:', error);
-    return new NextResponse('Failed to fetch filtered runs', { status: 500 });
+    return new NextResponse('Failed to filter runs', { status: 500 });
   }
 }
