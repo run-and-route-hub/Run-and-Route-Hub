@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { PeopleFill, Activity, MapFill } from 'react-bootstrap-icons';
 
