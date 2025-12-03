@@ -79,6 +79,8 @@ const AddRouteForm: React.FC = () => {
         }
         update('end', coords);
         setSelectionMode('end');
+        console.log(route);
+        console.log(route.path);
       }
     },
     [selectionMode],
