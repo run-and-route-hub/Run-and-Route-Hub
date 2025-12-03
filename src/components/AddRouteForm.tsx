@@ -49,6 +49,7 @@ const AddRouteForm: React.FC = () => {
     name: '',
     start: null,
     end: null,
+    loop: false,
     path: [],
   });
   const pather: { lat: number; lng: number; }[] = [];
@@ -83,7 +84,7 @@ const AddRouteForm: React.FC = () => {
   const handleFormSubmit = rhfHandleSubmit(async (formData: any) => {
     setError(null);
 
-    if (!route.start || !route.end) {
+    if (!route.start) {
       const errorMsg = 'Please provide a start location and an end location by clicking the map.';
       setError(errorMsg);
       console.error(errorMsg);
@@ -92,7 +93,9 @@ const AddRouteForm: React.FC = () => {
     setLoading(true);
     const pathlist = route.path.map((value: { lat: any; lng: any }) => ({ lat: value.lat, lng: value.lng })) || [];
     pathlist.unshift({ lat: route.start.lat, lng: route.start.lng });
-    pathlist.push({ lat: route.end.lat, lng: route.end.lng });
+    if (route.loop) {
+      pathlist.push({ lat: route.start.lat, lng: route.start.lng });
+    }
     let distanceKm = 0;
     for (let i = 0; i < pathlist.length - 1; i++) {
       distanceKm += getStraightLineDistance(pathlist[i].lat, pathlist[i].lng, pathlist[i + 1].lat, pathlist[i + 1].lng);
@@ -133,6 +136,18 @@ const AddRouteForm: React.FC = () => {
               required
               placeholder="Morning loop"
               style={{ display: 'block', width: '100%', padding: 8, marginTop: 6 }}
+            />
+          </label>
+        </div>
+
+        <div style={{ marginBottom: 12 }}>
+          <label>
+            Loop Route
+            <input
+              type="checkbox"
+              checked={route.loop}
+              onChange={(e) => update('loop', e.target.checked)}
+              style={{ marginLeft: 8 }}
             />
           </label>
         </div>
