@@ -103,11 +103,12 @@ function RouteSelector({
 }) {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredRoutes = MOCK_ROUTES.filter(
-    (route) =>
-      route.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      route.id.toString().includes(searchQuery)
-  );
+const filteredRoutes = MOCK_ROUTES.filter(
+  (route) =>
+    route.name.toLowerCase().includes(searchQuery.toLowerCase())
+    || route.id.toString().includes(searchQuery),
+);
+
 
   return (
     <div>
@@ -286,8 +287,11 @@ function RouteReviewForm({
     setSubmitting(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
+    await new Promise((resolve) => {
+    setTimeout(() => {
+    resolve(null);
+    }, 1000);
+  });
     console.log('Review submitted:', {
       routeId: route.id,
       userId: user.username,
