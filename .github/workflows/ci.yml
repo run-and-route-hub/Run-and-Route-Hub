@@ -9,6 +9,12 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    env:
+      NEXTAUTH_URL: "http://localhost:3000"
+      NEXTAUTH_SECRET: "secret"
+      POSTGRES_PRISMA_URL: "postgresql://neondb_owner:npg_dqj7eH8yKbiN@ep-sparkling-mountain-a4z223ft-pooler.us-east-1.aws.neon.tech/neondb?connect_timeout=15&sslmode=require"
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
