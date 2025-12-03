@@ -236,6 +236,14 @@ const AddRouteForm: React.FC = () => {
               onClick={handleMapClick}
             >
               {route.start && <Marker position={route.start} label="S" title="Start" />}
+              {route.path.map((point: { lat: number; lng: number }, index: number) => (
+                <Marker
+                  key={`path-point-${index}`}
+                  position={point}
+                  label={`${index + 1}`}
+                  title={`Path Point ${index + 1}`}
+                />
+              ))}
               {route.end && <Marker position={route.end} label="E" title="End" />}
             </GoogleMap>
           </LoadScript>
