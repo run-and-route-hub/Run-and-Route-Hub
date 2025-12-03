@@ -5,7 +5,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, Polyline } from '@react-google-maps/api';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -52,7 +52,7 @@ const AddRouteForm: React.FC = () => {
     loop: false,
     path: [],
   });
-  let pather: { lat: number; lng: number; }[] = [];
+  let pather: { lat: number; lng: number }[] = [];
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectionMode, setSelectionMode] = useState<'start' | 'end' | null>('start');
@@ -161,32 +161,21 @@ const AddRouteForm: React.FC = () => {
                   <>
                     {route.start ? (
                       <span>
-                        ✓ Start: (
-                        {route.start.lat.toFixed(4)}
-                        ,
-                        {route.start.lng.toFixed(4)}
-                        )
-                        {' '}
+                        ✓ Start: ({route.start.lat.toFixed(4)},{route.start.lng.toFixed(4)}){' '}
                       </span>
                     ) : (
                       <span>Click &quot;Select Start&quot; to begin</span>
                     )}
                     {route.start && route.end && (
                       <span>
-                        ✓ End: (
-                        {route.end.lat.toFixed(4)}
-                        ,
-                        {route.end.lng.toFixed(4)}
-                        )
+                        ✓ End: ({route.end.lat.toFixed(4)},{route.end.lng.toFixed(4)})
                       </span>
                     )}
                   </>
                 ) : (
                   <span>
                     Click on the map to select
-                    {selectionMode === 'start' ? 'START' : 'END'}
-                    {' '}
-                    point
+                    {selectionMode === 'start' ? 'START' : 'END'} point
                   </span>
                 )}
               </p>
@@ -216,7 +205,6 @@ const AddRouteForm: React.FC = () => {
                   }}
                 >
                   {route.end ? 'Change End' : 'Select End'}
-
                 </button>
               )}
               {(route.start || route.end) && (
@@ -243,7 +231,7 @@ const AddRouteForm: React.FC = () => {
           <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '400px', borderRadius: 4, marginBottom: 12 }}
-              center={{ lat: 21.3005, lng: -157.817 }}
+              center={route.start ?? { lat: 21.3005, lng: -157.817 }}
               zoom={15}
               onClick={handleMapClick}
             >
@@ -257,6 +245,13 @@ const AddRouteForm: React.FC = () => {
                 />
               ))}
               {route.end && <Marker position={route.end} label="E" title="End" />}
+              <Polyline
+                path={route.path}
+                options={{
+                  strokeColor: '#1d4ed8',
+                  strokeWeight: 5,
+                }}
+              />
             </GoogleMap>
           </LoadScript>
         </div>
@@ -278,11 +273,8 @@ const AddRouteForm: React.FC = () => {
               cursor: 'pointer',
               marginRight: '1rem',
             }}
-
           >
-
             {loading ? 'Saving…' : 'Create Route'}
-
           </button>
           <button
             type="button"
