@@ -245,7 +245,7 @@ const AddRouteForm: React.FC = () => {
               ))}
               {route.end && <Marker position={route.end} label="E" title="End" />}
               <Polyline
-                path={route.path}
+                path={route.path.map((point: { lat: number; lng: number }) => ({ lat: point.lat, lng: point.lng }))}
                 options={{
                   strokeColor: '#1d4ed8',
                   strokeWeight: 5,
