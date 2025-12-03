@@ -49,15 +49,9 @@ const NavBar: React.FC = () => {
                     Find Running Buddy
                   </Nav.Link>,
 
-                  <Nav.Link
-                    id="profile"
-                    href="/profile"
-                    key="profile"
-                    active={pathName === '/profile'}
-                  >
-                    Profile
+                  <Nav.Link id="review-nav" href="/review" key="review" active={pathName === '/review'}>
+                    Review Routes
                   </Nav.Link>,
-
                 ]
               : ''}
 
@@ -73,14 +67,19 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
-                  <BoxArrowRight />
-                  Sign Out
+                <NavDropdown.Item id="login-dropdown-profile" href="/profile">
+                  <PersonFill />
+                  Profile
                 </NavDropdown.Item>
 
                 <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
                   <Lock />
                   Change Password
+                </NavDropdown.Item>
+
+                <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
+                  <BoxArrowRight />
+                  Sign Out
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
