@@ -32,11 +32,11 @@ jobs:
         run: npm run build && npm run start &
 
       - name: Wait for server to be ready
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on https://run-and-route-hub.vercel.app/
 
       - name: Run Playwright tests
         env:
-          TEST_URL: http://localhost:3000
+          TEST_URL: https://run-and-route-hub.vercel.app/
         run: npx playwright test --project=chromium
 
       - name: Run ESLint
