@@ -91,12 +91,32 @@ const ChangePassword = () => {
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
+                        <Button
+                          style={{
+                            padding: '0.3rem 0.7rem',
+                            borderRadius: '999px',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                            backgroundColor: '#3e633e',
+                          }}
+                          type="submit"
+                          className="btn btn-primary"
+                        >
                           Change
                         </Button>
                       </Col>
                       <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
+                        <Button
+                          style={{
+                            padding: '0.3rem 0.7rem',
+                            borderRadius: '999px',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                          }}
+                          type="button"
+                          onClick={() => reset()}
+                          className="btn btn-primary float-right"
+                        >
                           Reset
                         </Button>
                       </Col>
