@@ -12,6 +12,9 @@ jobs:
 
     env:
       TEST_URL: "https://run-route-hub.vercel.app"
+      NEXTAUTH_URL: "https://run-route-hub.vercel.app"
+      NEXTAUTH_SECRET: "secret"
+
 
 
     steps:
