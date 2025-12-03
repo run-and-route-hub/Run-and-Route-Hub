@@ -51,9 +51,10 @@ const AddRouteForm: React.FC = () => {
     end: null,
     path: [],
   });
+  const pather: { lat: number; lng: number; }[] = [];
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectionMode, setSelectionMode] = useState<'start' | 'end' | null>(null);
+  const [selectionMode, setSelectionMode] = useState<'start' | 'end' | null>('start');
 
   function update(key: string, value: any) {
     setRoute((prev) => ({ ...prev, [key]: value }));
@@ -71,12 +72,9 @@ const AddRouteForm: React.FC = () => {
         update('start', coords);
         setSelectionMode('end');
       } else if (selectionMode === 'end') {
-        let newpath = route.path.length > 0 ? route.path : [];
-        console.log(route.path, route.path.length);
-        newpath = newpath.length > 0 ? newpath : [];
-        newpath.push(coords);
-        update('path', newpath);
-        console.log('Updated path:', newpath);
+        pather.push(coords);
+        update('path', pather);
+        console.log('Updated path:', pather);
       }
     },
     [selectionMode],
