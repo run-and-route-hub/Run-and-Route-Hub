@@ -254,7 +254,6 @@ const AddRouteForm: React.FC = () => {
             </GoogleMap>
           </LoadScript>
         </div>
-
         {error && (
           <div id="form-error" role="alert" style={{ color: 'crimson', marginBottom: 12 }}>
             {error}
