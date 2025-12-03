@@ -437,6 +437,7 @@ function RouteReviewForm({
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {user.avatarUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={user.avatarUrl}
               alt={user.name}
