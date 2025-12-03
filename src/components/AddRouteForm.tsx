@@ -56,7 +56,6 @@ const AddRouteForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectionMode, setSelectionMode] = useState<'start' | 'end' | null>('start');
-
   function update(key: string, value: any) {
     setRoute((prev) => ({ ...prev, [key]: value }));
   }
