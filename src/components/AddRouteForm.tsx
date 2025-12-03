@@ -52,7 +52,7 @@ const AddRouteForm: React.FC = () => {
     loop: false,
     path: [],
   });
-  const pather: { lat: number; lng: number; }[] = [];
+  let pather: { lat: number; lng: number; }[] = [];
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectionMode, setSelectionMode] = useState<'start' | 'end' | null>('start');
@@ -223,7 +223,8 @@ const AddRouteForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    setRoute((prev) => ({ ...prev, start: null, end: null }));
+                    setRoute((prev) => ({ ...prev, start: null, end: null, path: [] }));
+                    pather = [];
                     setSelectionMode(null);
                   }}
                   style={{
@@ -233,7 +234,7 @@ const AddRouteForm: React.FC = () => {
                     cursor: 'pointer',
                   }}
                 >
-                  Clear Both
+                  Clear All
                 </button>
               )}
             </div>
