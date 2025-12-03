@@ -227,7 +227,6 @@ const AddRouteForm: React.FC = () => {
               )}
             </div>
           </label>
-
           <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '400px', borderRadius: 4, marginBottom: 12 }}
