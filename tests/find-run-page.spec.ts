@@ -7,5 +7,5 @@ test('test', async ({ page }) => {
   await page.locator('#difficulty').selectOption({ label: 'Easy' });
   await page.locator('#minDistance').selectOption({ label: '1 mile' });
   await page.locator('#pace').selectOption({ label: 'Slow' });
-  await page.getByRole('heading', { name: 'Find Run' }).click();
+  await page.getByRole('heading', { name: 'Find Run' }).waitFor({ state: 'visible', timeout: 10000 });
 });

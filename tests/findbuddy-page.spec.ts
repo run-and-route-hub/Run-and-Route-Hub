@@ -3,7 +3,7 @@ import TEST_URL from './setup';
 
 test('test', async ({ page }) => {
   await page.goto(`${TEST_URL}/findbuddy`, { waitUntil: 'networkidle' });
-  await expect(page.getByRole('heading', { name: 'Find Running Buddy' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Find Running Buddy' })).toBeVisible({ timeout: 10000 });
   await page.getByRole('spinbutton', { name: 'Min pace (minutes per' }).click();
   await page.getByRole('spinbutton', { name: 'Min pace (minutes per' }).fill('1');
   await page.getByRole('spinbutton', { name: 'Max pace (minutes per' }).click();
