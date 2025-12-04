@@ -13,6 +13,6 @@ test('test', async ({ page }) => {
   await page.getByRole('link', { name: 'Add Run' }).click();
   await page.getByRole('textbox', { name: 'Name' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill('Morning Loop');
-  await page.getByRole('button', { name: 'Select Start and End Points' }).click();
+  await page.locator('text=Select Start and End Points on Map').click();
   await page.getByRole('heading', { name: 'Add Route' }).waitFor({ state: 'visible', timeout: 10000 });
 });
