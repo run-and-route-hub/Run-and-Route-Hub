@@ -8,10 +8,22 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     Role   @default(USER)
+  id                 Int               @id @default(autoincrement())
+  email              String            @unique
+  password           String
+  role               Role              @default(USER)
+  displayName        String?
+  location           String?
+  paceMin            Float?
+  paceMax            Float?
+  preferredDistanceKm Float?
+  terrainPreference  TerrainPreference?
+  experienceLevel    ExperienceLevel?  @default(BEGINNER)
+  bio                String?
+  daysAvailable      String[]          @default([])
+  prefersMorning     Boolean           @default(false)
+  prefersAfternoon   Boolean           @default(false)
+  prefersEvening     Boolean           @default(false)
 }
 
 model Stuff {
@@ -59,4 +71,16 @@ enum Condition {
   good
   fair
   poor
+}
+
+enum TerrainPreference {
+  FLAT
+  HILLS
+  MIXED
+}
+
+enum ExperienceLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
 }
