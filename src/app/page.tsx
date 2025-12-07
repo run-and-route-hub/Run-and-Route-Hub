@@ -32,10 +32,10 @@ const Home = () => (
             <Button href="/find-run" variant="success">
               Find Run
             </Button>
-            <Button href="/findbuddy" variant="outline-success">
+            <Button href="/findbuddy" variant="success">
               Find Running Buddy
             </Button>
-            <Button href="/add" variant="outline-secondary">
+            <Button href="/add" variant="success">
               Add a Run
             </Button>
           </div>
