@@ -148,3 +148,9 @@ body .navbar.custom-navbar .nav-link:hover {
     border-color: var(--rrh-tooltip-bg) transparent transparent transparent;
   }
 }
+.home-buttons button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 12px;
+}
