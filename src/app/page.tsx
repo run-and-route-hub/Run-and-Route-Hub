@@ -7,7 +7,7 @@ const Home = () => (
     <Container id="landing-page">
 
       {/* Hero */}
-      <Row className="justify-content-center text-center mb-5">
+      <Row className="justify-content-center text-center mb-5 hero-section">
         <Col lg={8}>
           <img
             src="/profile/therunhub.png"
@@ -18,12 +18,12 @@ const Home = () => (
 
           <h1 className="fw-bold mb-3">Run &amp; Route Hub</h1>
 
-          <p className="lead text-muted mb-3">
+          <p className="lead mb-3">
             A hub for UH runners and the wider community to log runs, discover new running routes,
             and connect with partners based on pace, availability, and terrain preference.
           </p>
 
-          <p className="text-muted mb-4">
+          <p className="mb-4">
             Whether you&apos;re training for a race or just getting active again,
             Run &amp; Route Hub keeps your progress organized and helps you find runners just like you.
           </p>
