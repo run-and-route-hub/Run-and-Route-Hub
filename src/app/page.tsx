@@ -36,7 +36,7 @@ const Home = () => (
               Find Running Buddy
             </Button>
             <Button href="/add" variant="success">
-              Add a Run
+              Add Run
             </Button>
           </div>
         </Col>
