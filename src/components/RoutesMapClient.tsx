@@ -95,28 +95,20 @@ export default function RoutesMapClient({ routes }: { routes: RouteForClient[] }
           return markers;
         })}
 
-            <InfoWindow position={selected.position} onCloseClick={() => setSelected(null)}>
-              <div style={{ maxWidth: 220 }}>
-                <h6 style={{ marginBottom: 4 }}>{selectedRoute.name}</h6>
-                <p style={{ marginBottom: 4 }}>
-                  Distance:
-                  {' '}
-                  {selectedRoute.distanceKm}
-                  {' '}
-                  km
-                </p>
-                <p style={{ marginBottom: 0 }}>
-                  This is the
-                  {' '}
-                  <strong>{selected.type === 'start' ? 'start' : 'end'}</strong>
-                  {' '}
-                  of the route.
-                </p>
-              </div>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-      </LoadScript>
+        {selected && selectedRoute && (
+          <InfoWindow position={selected.position} onCloseClick={() => setSelected(null)}>
+            <div style={{ maxWidth: 240 }}>
+              <h6 style={{ marginBottom: 4 }}>{selectedRoute.name}</h6>
+              <p style={{ marginBottom: 4 }}>Distance: {selectedRoute.distanceKm} km</p>
+              <p style={{ marginBottom: 0 }}>
+                This is the <strong>{selected.type === 'start' ? 'start' : 'end'}</strong> of the route.
+                <br />
+                <Link href={`/edit/${selectedRoute.id}`}>Edit</Link>
+              </p>
+            </div>
+          </InfoWindow>
+        )}
+      </GoogleMap>
     </div>
   );
 }
