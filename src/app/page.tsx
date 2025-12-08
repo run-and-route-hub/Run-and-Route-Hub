@@ -42,58 +42,6 @@ const Home = () => ( //
         </Col>
       </Row>
 
-      {/* Awards Section */}
-      <section style={{ backgroundColor: '#f8f9fa', padding: '60px 0' }}>
-        <Container>
-          <h2 className="text-center mb-4" style={{ fontWeight: '600' }}>
-            🏆 Your Awards
-          </h2>
-
-          {/* Awards Row */}
-          <Row className="g-4 justify-content-center">
-
-            {/* Award Card 1 */}
-            <Col md={6} lg={4}>
-              <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
-                <div style={{ fontSize: '28px' }}>🔥</div>
-                <h5 className="mt-2 fw-semibold">3-Day Streak</h5>
-                <p className="text-muted mb-0">Great consistency — keep it up!</p>
-              </div>
-            </Col>
-
-            {/* Award Card 2 */}
-            <Col md={6} lg={4}>
-              <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
-                <div style={{ fontSize: '28px' }}>🌍</div>
-                <h5 className="mt-2 fw-semibold">Route Explorer</h5>
-                <p className="text-muted mb-0">You&apos;ve visited 5+ running spots.</p>
-              </div>
-            </Col>
-
-            {/* Award Card 3 */}
-            <Col md={6} lg={4}>
-              <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
-                <div style={{ fontSize: '28px' }}>⛰️</div>
-                <h5 className="mt-2 fw-semibold">Hill Crusher</h5>
-                <p className="text-muted mb-0">Completed a route with 300+ ft elevation.</p>
-              </div>
-            </Col>
-
-          </Row>
-
-          {/* View All Awards Button — improved spacing */}
-          <div className="text-center mt-5">
-            <a
-              href="/awards"
-              className="btn btn-outline-success px-4 py-2"
-              style={{ fontSize: '16px', borderRadius: '8px' }}
-            >
-              View All Awards
-            </a>
-          </div>
-        </Container>
-      </section>
-
       {/* Features */}
       <Row className="g-4">
 

@@ -5,7 +5,7 @@
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
-import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight, Lock, PersonFill, PersonPlusFill, TrophyFill } from 'react-bootstrap-icons';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -52,8 +52,6 @@ const NavBar: React.FC = () => {
                   <Nav.Link id="review-nav" href="/review" key="review" active={pathName === '/review'}>
                     Review Routes
                   </Nav.Link>,
-
-                  <Nav.Link href="/awards">Awards</Nav.Link>,
                 ]
               : ''}
 
@@ -72,6 +70,11 @@ const NavBar: React.FC = () => {
                 <NavDropdown.Item id="login-dropdown-profile" href="/profile">
                   <PersonFill />
                   Profile
+                </NavDropdown.Item>
+
+                <NavDropdown.Item id="login-dropdown-awards" href="/awards">
+                  <TrophyFill className="me-2" />
+                  Awards
                 </NavDropdown.Item>
 
                 <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
