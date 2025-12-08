@@ -8,10 +8,26 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     Role   @default(USER)
+  id              Int              @id @default(autoincrement())
+  email           String           @unique
+  password        String
+  role            Role             @default(USER)
+  
+  // Profile
+  name            String?
+  username        String?          @unique
+  bio             String?
+  avatarUrl       String?
+  location        String?
+  joinedDate      DateTime         @default(now())
+  experienceLevel ExperienceLevel  @default(BEGINNER)
+  
+  // Running stats
+  totalMilesMonth Float            @default(0)
+  totalRunsMonth  Int              @default(0)
+  avgPace         String?          
+  fastestMile     String?          
+  streakDays      Int              @default(0)
 }
 
 model Stuff {
@@ -59,4 +75,10 @@ enum Condition {
   good
   fair
   poor
+}
+
+enum ExperienceLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
 }
