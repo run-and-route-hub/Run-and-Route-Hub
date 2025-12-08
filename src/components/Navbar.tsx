@@ -52,6 +52,8 @@ const NavBar: React.FC = () => {
                   <Nav.Link id="review-nav" href="/review" key="review" active={pathName === '/review'}>
                     Review Routes
                   </Nav.Link>,
+
+                  <Nav.Link href="/awards">Awards</Nav.Link>,
                 ]
               : ''}
 

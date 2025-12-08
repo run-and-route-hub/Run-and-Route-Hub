@@ -43,36 +43,56 @@ const Home = () => (
       </Row>
 
       {/* Awards Section */}
-      <Row className="justify-content-center text-center mb-5">
-        <Col lg={10}>
-          <h2 className="fw-bold mb-4">🏆 Your Awards</h2>
+      <section style={{ backgroundColor: '#f8f9fa', padding: '60px 0' }}>
+        <Container>
+          <h2 className="text-center mb-4" style={{ fontWeight: '600' }}>
+            🏆 Your Awards
+          </h2>
 
+          {/* Awards Row */}
           <Row className="g-4 justify-content-center">
 
-            <Col xs={12} sm={6} md={4}>
-              <div className="p-4 bg-white rounded-3 shadow-sm h-100">
-                <h3 className="h5 fw-semibold mb-2">🔥 3-Day Streak</h3>
-                <p className="text-muted mb-0">You ran three days in a row — great consistency!</p>
+            {/* Award Card 1 */}
+            <Col md={6} lg={4}>
+              <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
+                <div style={{ fontSize: '28px' }}>🔥</div>
+                <h5 className="mt-2 fw-semibold">3-Day Streak</h5>
+                <p className="text-muted mb-0">Great consistency — keep it up!</p>
               </div>
             </Col>
 
-            <Col xs={12} sm={6} md={4}>
-              <div className="p-4 bg-white rounded-3 shadow-sm h-100">
-                <h3 className="h5 fw-semibold mb-2">🌎 Route Explorer</h3>
-                <p className="text-muted mb-0">You&apos;ve tried 5+ different running locations around O‘ahu.</p>
+            {/* Award Card 2 */}
+            <Col md={6} lg={4}>
+              <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
+                <div style={{ fontSize: '28px' }}>🌍</div>
+                <h5 className="mt-2 fw-semibold">Route Explorer</h5>
+                <p className="text-muted mb-0">You've visited 5+ running spots.</p>
               </div>
             </Col>
 
-            <Col xs={12} sm={6} md={4}>
-              <div className="p-4 bg-white rounded-3 shadow-sm h-100">
-                <h3 className="h5 fw-semibold mb-2">⛰️ Hill Crusher</h3>
-                <p className="text-muted mb-0">You completed a route with 300+ ft of elevation gain.</p>
+            {/* Award Card 3 */}
+            <Col md={6} lg={4}>
+              <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
+                <div style={{ fontSize: '28px' }}>⛰️</div>
+                <h5 className="mt-2 fw-semibold">Hill Crusher</h5>
+                <p className="text-muted mb-0">Completed a route with 300+ ft elevation.</p>
               </div>
             </Col>
 
           </Row>
-        </Col>
-      </Row>
+
+          {/* View All Awards Button — improved spacing */}
+          <div className="text-center mt-5">
+            <a
+              href="/awards"
+              className="btn btn-outline-success px-4 py-2"
+              style={{ fontSize: '16px', borderRadius: '8px' }}
+            >
+              View All Awards
+            </a>
+          </div>
+        </Container>
+      </section>
 
       {/* Features */}
       <Row className="g-4">
