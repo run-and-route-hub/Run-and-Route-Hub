@@ -66,7 +66,7 @@ const Home = () => (
               <div className="p-4 bg-white rounded-3 shadow-sm text-center h-100">
                 <div style={{ fontSize: '28px' }}>🌍</div>
                 <h5 className="mt-2 fw-semibold">Route Explorer</h5>
-                <p className="text-muted mb-0">You've visited 5+ running spots.</p>
+                <p className="text-muted mb-0">You&apos;ve visited 5+ running spots.</p>
               </div>
             </Col>
 
