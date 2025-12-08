@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { GoogleMap, LoadScript, Polyline, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, Polyline, Marker, InfoWindow, useJsApiLoader } from '@react-google-maps/api';
+import Link from 'next/link';
 
 export type RouteForClient = {
   id: string;
@@ -34,61 +35,66 @@ export default function RoutesMapClient({ routes }: { routes: RouteForClient[] }
 
   const selectedRoute = selected ? routes.find((r) => r.id === selected.routeId) : undefined;
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!,
+    libraries: ['geometry'],
+  });
+
+  if (!isLoaded) return <div>Loading map...</div>;
+
   return (
     <div style={{ width: '100%', height: '70vh', borderRadius: 12, overflow: 'hidden' }}>
-      <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY as string} libraries={['geometry']}>
-        <GoogleMap
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          center={center}
-          zoom={15}
-          options={{
-            streetViewControl: false,
-            mapTypeControl: false,
-            fullscreenControl: false,
-          }}
-        >
-          {routes.map((route) => (
-            <Polyline
-              key={route.id}
-              path={route.path}
-              options={{
-                strokeColor: route.color ?? '#1d4ed8',
-                strokeWeight: 5,
-              }}
-            />
-          ))}
+      <GoogleMap
+        mapContainerStyle={{ width: '100%', height: '100%' }}
+        center={center}
+        zoom={15}
+        options={{
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: false,
+        }}
+      >
+        {routes.map((route) => (
+          <Polyline
+            key={route.id}
+            path={route.path}
+            options={{
+              strokeColor: route.color ?? '#1d4ed8',
+              strokeWeight: 5,
+            }}
+          />
+        ))}
 
-          {routes.flatMap((route) => {
-            const markers: JSX.Element[] = [];
+        {routes.flatMap((route) => {
+          const markers: JSX.Element[] = [];
 
-            if (route.start) {
-              markers.push(
-                <Marker
-                  key={`${route.id}-start`}
-                  position={route.start}
-                  label="S"
-                  title={`${route.name} – start (${route.distanceKm} km)`}
-                  onClick={() => handleMarkerClick(route.id, route.start!, 'start')}
-                />,
-              );
-            }
+          if (route.start) {
+            markers.push(
+              <Marker
+                key={`${route.id}-start`}
+                position={route.start}
+                label="S"
+                title={`${route.name} – start (${route.distanceKm} km)`}
+                onClick={() => handleMarkerClick(route.id, route.start!, 'start')}
+              />,
+            );
+          }
 
-            if (route.end && !sameLatLng(route.start, route.end)) {
-              markers.push(
-                <Marker
-                  key={`${route.id}-end`}
-                  position={route.end}
-                  label="E"
-                  title={`${route.name} – finish (${route.distanceKm} km)`}
-                  onClick={() => handleMarkerClick(route.id, route.end!, 'end')}
-                />,
-              );
-            }
+          if (route.end && !sameLatLng(route.start, route.end)) {
+            markers.push(
+              <Marker
+                key={`${route.id}-end`}
+                position={route.end}
+                label="E"
+                title={`${route.name} – finish (${route.distanceKm} km)`}
+                onClick={() => handleMarkerClick(route.id, route.end!, 'end')}
+              />,
+            );
+          }
 
-            return markers;
-          })}
+          return markers;
+        })}
 
-          {selected && selectedRoute && (
             <InfoWindow position={selected.position} onCloseClick={() => setSelected(null)}>
               <div style={{ maxWidth: 220 }}>
                 <h6 style={{ marginBottom: 4 }}>{selectedRoute.name}</h6>
