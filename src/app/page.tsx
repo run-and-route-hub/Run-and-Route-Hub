@@ -42,6 +42,38 @@ const Home = () => (
         </Col>
       </Row>
 
+      {/* Awards Section */}
+      <Row className="justify-content-center text-center mb-5">
+        <Col lg={10}>
+          <h2 className="fw-bold mb-4">🏆 Your Awards</h2>
+
+          <Row className="g-4 justify-content-center">
+
+            <Col xs={12} sm={6} md={4}>
+              <div className="p-4 bg-white rounded-3 shadow-sm h-100">
+                <h3 className="h5 fw-semibold mb-2">🔥 3-Day Streak</h3>
+                <p className="text-muted mb-0">You ran three days in a row — great consistency!</p>
+              </div>
+            </Col>
+
+            <Col xs={12} sm={6} md={4}>
+              <div className="p-4 bg-white rounded-3 shadow-sm h-100">
+                <h3 className="h5 fw-semibold mb-2">🌎 Route Explorer</h3>
+                <p className="text-muted mb-0">You&apos;ve tried 5+ different running locations around O‘ahu.</p>
+              </div>
+            </Col>
+
+            <Col xs={12} sm={6} md={4}>
+              <div className="p-4 bg-white rounded-3 shadow-sm h-100">
+                <h3 className="h5 fw-semibold mb-2">⛰️ Hill Crusher</h3>
+                <p className="text-muted mb-0">You completed a route with 300+ ft of elevation gain.</p>
+              </div>
+            </Col>
+
+          </Row>
+        </Col>
+      </Row>
+
       {/* Features */}
       <Row className="g-4">
 
