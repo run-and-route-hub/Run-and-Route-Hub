@@ -7,7 +7,7 @@ export default function FindRunPage() {
   const [minDistance, setMinDistance] = useState('');
   const [pace, setPace] = useState('');
   const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); //
 
   /* const fetchRuns = async () => {
     setLoading(true);
