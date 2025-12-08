@@ -49,6 +49,16 @@ model Run {
   difficulty String
 }
 
+model Award {
+  id        Int    @id @default(autoincrement())
+  title     String
+  icon      String
+  description String
+  unlocked  Boolean @default(false)
+  userEmail String
+}
+
+
 enum Role {
   USER
   ADMIN
