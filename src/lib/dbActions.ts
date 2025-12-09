@@ -45,6 +45,21 @@ export async function addRoute(route: {
   // After adding, redirect to the list page
   redirect('/routes');
 }
+
+export async function deleteRoute(routeId: number) {
+  await prisma.location.deleteMany({
+    where: {
+      route: {
+        id: routeId,
+      },
+    },
+  });
+  await prisma.route.delete({
+    where: { id: routeId },
+  });
+  // After deleting, redirect to the list page
+  redirect('/routes');
+}
 /**
  * Changes the password of an existing user in the database. n
  * @param credentials, an object with the following properties: email, password.

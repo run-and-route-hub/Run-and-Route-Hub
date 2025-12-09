@@ -2,6 +2,8 @@
 
 import React, { useMemo, useState } from 'react';
 import { GoogleMap, LoadScript, Polyline, Marker, InfoWindow } from '@react-google-maps/api';
+import { Button } from 'react-bootstrap';
+import { deleteRoute } from '@/lib/dbActions';
 
 export type RouteForClient = {
   id: string;
@@ -105,6 +107,11 @@ export default function RoutesMapClient({ routes }: { routes: RouteForClient[] }
                   <strong>{selected.type === 'start' ? 'start' : 'end'}</strong>
                   {' '}
                   of the route.
+                </p>
+                <p>
+                  <Button variant="danger" size="sm" onClick={() => deleteRoute(Number(selectedRoute.id))}>
+                    delete route
+                  </Button>
                 </p>
               </div>
             </InfoWindow>
