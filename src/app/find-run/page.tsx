@@ -61,7 +61,6 @@ export default function FindRunPage() {
           </p>
         </div>
 
-        {/* Filters */}
         <div style={{ marginBottom: '30px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '15px', textAlign: 'center' }}>
             Filter Runs
@@ -83,7 +82,6 @@ export default function FindRunPage() {
             />
           </div>
 
-          {/* Button */}
           <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <button
               onClick={fetchRuns}
@@ -103,7 +101,6 @@ export default function FindRunPage() {
           </div>
         </div>
 
-        {/* Results */}
         <div style={{ marginTop: '40px' }}>
           {results.length > 0 ? (
             results.map((run) => (
