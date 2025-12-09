@@ -18,15 +18,6 @@ export async function createUser(credentials: { email: string; password: string 
     },
   });
 }
-
-type RouteInput = {
-  id: number;
-  name: string;
-  distanceKm: number;
-  distanceMile: number;
-  path: { lat: number; lng: number }[];
-};
-
 /**
  * Adds a new route to the database.
  * @param route,
@@ -54,27 +45,6 @@ export async function addRoute(route: {
   // After adding, redirect to the list page
   redirect('/routes');
 }
-
-export async function editRoute(route : RouteInput) {
-  await prisma.route.update({
-    where: { id: route.id },
-    data: {
-      name: route.name,
-      distanceKm: route.distanceKm,
-      distanceMile: route.distanceMile,
-      colorr: Math.floor(Math.random() * 256),
-      colorg: Math.floor(Math.random() * 256),
-      colorb: Math.floor(Math.random() * 256),
-      path: {
-        deleteMany: {},
-        create: route.path.map((p) => ({ lat: p.lat, lng: p.lng })),
-      },
-    },
-  });
-  // After updating, redirect to the list page
-  redirect('/routes');
-}
-
 /**
  * Changes the password of an existing user in the database. n
  * @param credentials, an object with the following properties: email, password.

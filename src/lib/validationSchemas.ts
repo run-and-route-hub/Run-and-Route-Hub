@@ -29,20 +29,3 @@ export const AddRouteSchema = Yup.object({
     lng: Yup.number().required(),
   }).required(),
 });
-
-export const EditRouteSchema = Yup.object({
-  id: Yup.number().required(),
-  name: Yup.string().required(),
-  path: Yup.array().of(Yup.object({
-    lat: Yup.number().required(),
-    lng: Yup.number().required(),
-  })).optional(),
-  start: Yup.object({
-    lat: Yup.number().required(),
-    lng: Yup.number().required(),
-  }).required(),
-  end: Yup.object({
-    lat: Yup.number().required(),
-    lng: Yup.number().required(),
-  }).required(),
-});
