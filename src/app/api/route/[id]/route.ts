@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    const routeId = parseInt(params.id);
+    const routeId = parseInt(params.id, 10);
 
     console.log('API: Fetching route with ID:', routeId);
 
