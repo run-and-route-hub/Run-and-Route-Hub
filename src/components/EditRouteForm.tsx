@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScriptNext, Marker } from '@react-google-maps/api';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
@@ -124,13 +124,36 @@ const EditRouteForm: React.FC<EditRouteFormProps> = ({ route }) => {
 
           {selectionMode === null && (
             <>
-              <button type="button" onClick={() => setSelectionMode('start')}>
+              <button
+                type="button"
+                onClick={() => setSelectionMode('start')}
+                style={{
+                  padding: '0.3rem 0.7rem',
+                  borderRadius: '999px',
+                  fontSize: '0.85rem',
+                  cursor: 'pointer',
+                  marginRight: '1rem',
+                  backgroundColor: 'var(--rrh-green)',
+                  color: 'white',
+                  border: 'none',
+                }}
+              >
                 {routeData.start ? 'Change Start' : 'Select Start'}
               </button>
               <button
                 type="button"
                 onClick={() => setSelectionMode('end')}
                 disabled={!routeData.start}
+                style={{
+                  padding: '0.3rem 0.7rem',
+                  borderRadius: '999px',
+                  fontSize: '0.85rem',
+                  cursor: 'pointer',
+                  marginRight: '1rem',
+                  backgroundColor: 'var(--rrh-green)',
+                  color: 'white',
+                  border: 'none',
+                }}
               >
                 {routeData.end ? 'Change End' : 'Select End'}
               </button>
@@ -138,6 +161,16 @@ const EditRouteForm: React.FC<EditRouteFormProps> = ({ route }) => {
                 <button
                   type="button"
                   onClick={() => setRouteData({ start: null, end: null, path: [] })}
+                  style={{
+                    padding: '0.3rem 0.7rem',
+                    borderRadius: '999px',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    marginRight: '1rem',
+                    backgroundColor: 'var(--rrh-green)',
+                    color: 'white',
+                    border: 'none',
+                  }}
                 >
                   Clear Both
                 </button>
@@ -148,7 +181,7 @@ const EditRouteForm: React.FC<EditRouteFormProps> = ({ route }) => {
           {selectionMode && <p>Click on the map to select {selectionMode.toUpperCase()} point</p>}
         </div>
 
-        <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
+        <LoadScriptNext googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '400px', borderRadius: 4, marginTop: 8 }}
             center={routeData.start ?? { lat: 21.3005, lng: -157.817 }}
@@ -158,11 +191,23 @@ const EditRouteForm: React.FC<EditRouteFormProps> = ({ route }) => {
             {routeData.start && <Marker position={routeData.start} label="S" />}
             {routeData.end && <Marker position={routeData.end} label="E" />}
           </GoogleMap>
-        </LoadScript>
+        </LoadScriptNext>
 
         {error && <div style={{ color: 'crimson', marginTop: 12 }}>{error}</div>}
 
-        <button type="submit" disabled={loading} style={{ marginTop: 12 }}>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: '0.3rem 0.7rem',
+            borderRadius: '999px',
+            fontSize: '0.85rem',
+            cursor: 'pointer',
+            backgroundColor: 'var(--rrh-green)',
+            color: 'white',
+            border: 'none',
+            marginTop: 12 }}
+        >
           {loading ? 'Saving…' : 'Save Changes'}
         </button>
       </form>
