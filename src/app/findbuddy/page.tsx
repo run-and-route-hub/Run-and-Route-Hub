@@ -1,9 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type TimeOfDay = 'Morning' | 'Afternoon' | 'Evening';
 type Terrain = 'Flat' | 'Hills' | 'Mixed';
+
+type ApiPartner = {
+  id: number;
+  email: string;
+  displayName: string | null;
+  location: string | null;
+  paceMin: number | null;
+  paceMax: number | null;
+  preferredDistanceKm: number | null;
+  terrainPreference: Terrain | null;
+  bio: string | null;
+  daysAvailable: string[];
+  prefersMorning: boolean;
+  prefersAfternoon: boolean;
+  prefersEvening: boolean;
+};
 
 type Partner = {
   id: string;
@@ -17,52 +33,70 @@ type Partner = {
   terrain: Terrain;
 };
 
-const mockPartners: Partner[] = [
-  {
-    id: '1',
-    name: 'Daniel',
-    paceMin: 5.0,
-    paceMax: 6.0,
-    days: ['Mon', 'Wed', 'Fri'],
-    times: ['Morning', 'Evening'],
-    preferredDistanceKm: 5,
-    bio: 'New to running, training for my first 5K around UH campus.',
-    terrain: 'Flat',
-  },
-  {
-    id: '2',
-    name: 'Jordan',
-    paceMin: 4.5,
-    paceMax: 5.5,
-    days: ['Tue', 'Thu'],
-    times: ['Evening'],
-    preferredDistanceKm: 8,
-    bio: 'Likes tempo runs after class, usually around Manoa and Waikiki.',
-    terrain: 'Hills',
-  },
-  {
-    id: '3',
-    name: 'Amanda',
-    paceMin: 6.0,
-    paceMax: 7.0,
-    days: ['Sat', 'Sun'],
-    times: ['Morning'],
-    preferredDistanceKm: 10,
-    bio: 'Weekend long runs, chill conversational pace.',
-    terrain: 'Mixed',
-  },
-];
-
 const ALL_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const ALL_TIMES: TimeOfDay[] = ['Morning', 'Afternoon', 'Evening'];
 const ALL_TERRAINS: Terrain[] = ['Flat', 'Hills', 'Mixed'];
 
+function mapApiToPartner(user: ApiPartner): Partner | null {
+  if (
+    user.paceMin === null
+    || user.paceMax === null
+    || user.preferredDistanceKm === null
+    || user.terrainPreference === null
+  ) {
+    return null;
+  }
+
+  const times: TimeOfDay[] = [];
+  if (user.prefersMorning) times.push('Morning');
+  if (user.prefersAfternoon) times.push('Afternoon');
+  if (user.prefersEvening) times.push('Evening');
+
+  return {
+    id: String(user.id),
+    name: user.displayName || user.email.split('@')[0],
+    paceMin: user.paceMin,
+    paceMax: user.paceMax,
+    days: user.daysAvailable ?? [],
+    times,
+    preferredDistanceKm: user.preferredDistanceKm,
+    bio: user.bio || 'Runner from the community.',
+    terrain: user.terrainPreference,
+  };
+}
+
 export default function PartnersPage() {
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [minPace, setMinPace] = useState<number | ''>('');
   const [maxPace, setMaxPace] = useState<number | ''>('');
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimes, setSelectedTimes] = useState<TimeOfDay[]>([]);
   const [selectedTerrains, setSelectedTerrains] = useState<Terrain[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch('/api/partners');
+        if (!res.ok) {
+          throw new Error('Failed to load partners');
+        }
+        const data: ApiPartner[] = await res.json();
+        const mapped = data
+          .map(mapApiToPartner)
+          .filter((p): p is Partner => p !== null);
+        setPartners(mapped);
+      } catch (e) {
+        setError('Could not load running buddies. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+  }, []);
 
   const toggleDay = (day: string) => {
     setSelectedDays((prev) => (prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]));
@@ -78,7 +112,7 @@ export default function PartnersPage() {
       : [...prev, terrain]));
   };
 
-  const filteredPartners = mockPartners.filter((partner) => {
+  const filteredPartners = partners.filter((partner) => {
     const paceOK = (minPace === '' && maxPace === '')
       || ((minPace === '' || partner.paceMax >= minPace)
         && (maxPace === '' || partner.paceMin <= maxPace));
@@ -98,12 +132,18 @@ export default function PartnersPage() {
   return (
     <main style={{ padding: '1.5rem', maxWidth: 1000, margin: '0 auto' }}>
       <header style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.25rem' }}>
+        <h1
+          style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            marginBottom: '0.25rem',
+          }}
+        >
           Find Running Buddy
         </h1>
         <p style={{ color: '#555', maxWidth: 650, margin: '0 auto' }}>
           Match with runners who have a similar pace, availability, and terrain
-          preference.
+          preference using real profiles stored in our database.
         </p>
       </header>
 
@@ -114,9 +154,16 @@ export default function PartnersPage() {
           borderRadius: '0.75rem',
           padding: '1rem 1.25rem',
           marginBottom: '1.5rem',
+          backgroundColor: '#fff',
         }}
       >
-        <h2 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.75rem' }}>
+        <h2
+          style={{
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            marginBottom: '0.75rem',
+          }}
+        >
           Filters
         </h2>
 
@@ -303,20 +350,27 @@ export default function PartnersPage() {
             alignItems: 'baseline',
           }}
         >
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Matching Buddies</h2>
+          <h2 style={{ fontSize: '1.1rem', fontWeight: 600 }}>
+            Matching Buddies
+          </h2>
           <span style={{ fontSize: '0.85rem', color: '#666' }}>
-            {filteredPartners.length}
-            {' '}
-            result
+            {filteredPartners.length} result
             {filteredPartners.length === 1 ? '' : 's'}
           </span>
         </div>
 
-        {filteredPartners.length === 0 ? (
+        {loading && <p style={{ color: '#777' }}>Loading buddies…</p>}
+        {error && !loading && (
+          <p style={{ color: '#b00020' }}>{error}</p>
+        )}
+
+        {!loading && !error && filteredPartners.length === 0 ? (
           <p style={{ color: '#777' }}>
             No matching buddies yet. Try adjusting your filters.
           </p>
-        ) : (
+        ) : null}
+
+        {!loading && !error && filteredPartners.length > 0 && (
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {filteredPartners.map((partner) => (
               <li
@@ -326,6 +380,7 @@ export default function PartnersPage() {
                   borderRadius: '0.75rem',
                   padding: '1rem 1.25rem',
                   marginBottom: '0.75rem',
+                  backgroundColor: '#fff',
                 }}
               >
                 <div
@@ -336,7 +391,13 @@ export default function PartnersPage() {
                     marginBottom: '0.35rem',
                   }}
                 >
-                  <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: 0 }}>
+                  <h3
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      margin: 0,
+                    }}
+                  >
                     {partner.name}
                   </h3>
                   <span
@@ -346,15 +407,8 @@ export default function PartnersPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {partner.paceMin.toFixed(1)}
-                    –
-                    {partner.paceMax.toFixed(1)}
-                    {' '}
-                    min/km •
-                    {' '}
-                    {partner.preferredDistanceKm}
-                    {' '}
-                    km
+                    {partner.paceMin.toFixed(1)}–{partner.paceMax.toFixed(1)} min/km •{' '}
+                    {partner.preferredDistanceKm} km
                   </span>
                 </div>
 
@@ -368,19 +422,24 @@ export default function PartnersPage() {
                   {partner.bio}
                 </p>
 
-                <p style={{ margin: 0, fontSize: '0.85rem', color: '#666' }}>
-                  <strong>Runs on:</strong>
-                  {' '}
-                  {partner.days.join(', ')}
-                  {' '}
-                  •
-                  {' '}
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: '0.85rem',
+                    color: '#666',
+                  }}
+                >
+                  <strong>Runs on:</strong> {partner.days.join(', ')} •{' '}
                   {partner.times.join(', ')}
                 </p>
-                <p style={{ margin: 0, fontSize: '0.85rem', color: '#666' }}>
-                  <strong>Terrain:</strong>
-                  {' '}
-                  {partner.terrain}
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: '0.85rem',
+                    color: '#666',
+                  }}
+                >
+                  <strong>Terrain:</strong> {partner.terrain}
                 </p>
               </li>
             ))}
