@@ -135,7 +135,7 @@ export default function RouteDetailPage() {
         <div style={{ width: '100%', height: '70vh', marginBottom: '40px' }}>
           {process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ? (
             <LoadScript
-              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY as string}
+              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}
               loadingElement={<div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading map...</div>}
             >
               <GoogleMap
