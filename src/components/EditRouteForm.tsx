@@ -178,7 +178,7 @@ const EditRouteForm: React.FC<EditRouteFormProps> = ({ route }) => {
             </>
           )}
 
-          {selectionMode && <p>Click on the map to select {selectionMode.toUpperCase()} point</p>}
+          {selectionMode && <p>Click on the map to select. {selectionMode.toUpperCase()} point</p>}
         </div>
 
         <LoadScriptNext googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!}>
