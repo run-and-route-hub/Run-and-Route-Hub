@@ -9,7 +9,6 @@ test('test', async ({ page }) => {
   await page.locator('input[name="password"]').fill('changeme');
   await page.getByRole('button', { name: 'Sign in' }).click();
   await page.goto(`${TEST_URL}/add-run`, { waitUntil: 'domcontentloaded' });
-  await page.getByRole('link', { name: 'Add Run' }).click();
   await page.getByRole('textbox', { name: 'Name' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill('Morning Loop');
   await page.locator('text=Select Start and End Points on Map').click();

@@ -48,7 +48,7 @@ export default function ProfilePage() {
         >
           <div>
             <h2 style={{ fontSize: '1.1rem', fontWeight: 600, margin: 0 }}>
-              Your stats hi
+              Your stats
             </h2>
             <p style={{ fontSize: '0.85rem', color: '#555', margin: '0.25rem 0 0 0' }}>
               Snapshot of your last 30 days of running
