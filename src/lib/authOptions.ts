@@ -20,24 +20,66 @@ const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log('=== AUTHORIZE CALLED ===');
+        console.log('Email received:', credentials?.email);
+        console.log('Password received:', credentials?.password ? `YES (length: ${credentials.password.length})` : 'NO');
+
         if (!credentials?.email || !credentials.password) {
+          console.log(' Missing credentials');
           return null;
         }
+
         try {
+          console.log('Querying database for:', credentials.email);
+
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
           });
-          if (!user) return null;
+
+          console.log('User found:', !!user);
+
+          if (!user) {
+            console.log(' No user with email:', credentials.email);
+            return null;
+          }
+
+          console.log(' User exists:', {
+            id: user.id,
+            email: user.email,
+            hasPassword: !!user.password,
+            passwordPrefix: user.password?.substring(0, 7),
+          });
+
+          console.log(' Comparing passwords...');
+          console.log('Input password:', credentials.password);
+          console.log('Stored hash prefix:', user.password.substring(0, 20));
 
           const good = await compare(credentials.password, user.password);
-          if (!good) return null;
+
+          console.log(' Compare result:', good);
+
+          if (!good) {
+            console.log('Password mismatch!');
+
+            // Test if "changeme" would work
+            const testResult = await compare('changeme', user.password);
+            console.log('Would "changeme" work?', testResult);
+
+            return null;
+          }
+
+          console.log('✅ Authentication successful!');
 
           return {
             id: String(user.id),
             email: user.email,
             role: user.role,
           };
-        } catch {
+        } catch (error) {
+          const err = error as Error;
+          console.error('ERROR in authorize:', error);
+          console.error('Error message:', err.message);
+          console.error('Error stack:', err.stack);
           return null;
         }
       },
