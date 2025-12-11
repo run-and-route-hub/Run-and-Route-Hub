@@ -8,7 +8,8 @@ test('test', async ({ page }) => {
   await page.locator('input[name="password"]').waitFor({ state: 'visible', timeout: 10000 });
   await page.locator('input[name="password"]').fill('changeme');
   await page.getByRole('button', { name: 'Sign in' }).click();
-  await page.goto(`${TEST_URL}/add-run`, { waitUntil: 'domcontentloaded' });
+  await page.waitForURL(`${TEST_URL}/`, { timeout: 10000 });
+  await page.goto(`${TEST_URL}/add-run`);
   await page.getByRole('textbox', { name: 'Name' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill('Morning Loop');
   await page.locator('text=Select Start and End Points on Map').click();
