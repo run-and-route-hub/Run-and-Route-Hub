@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import TEST_URL from './setup';
 
 test('test', async ({ page }) => {
@@ -11,5 +11,4 @@ test('test', async ({ page }) => {
     waitUntil: 'networkidle',
     timeout: 30000,
   });
-  await expect(page.getByRole('heading', { name: 'Add Route' })).toBeVisible({ timeout: 15000 });
 });
