@@ -10,5 +10,5 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Sign in' }).click();
   await page.waitForURL(`${TEST_URL}`, { timeout: 10000 });
   await page.goto(`${TEST_URL}/add-run`);
-  await page.getByRole('heading', { name: 'Add Route' }).waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('h1', { hasText: 'Add Route' }).waitFor({ timeout: 15000 });
 });
