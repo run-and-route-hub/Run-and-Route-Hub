@@ -70,6 +70,14 @@ model Award {
   userEmail String
 }
 
+model UserAward {
+  id          Int    @id @default(autoincrement())
+  userEmail   String
+  awardName   String
+  unlockedAt  DateTime @default(now())
+}
+
+
 
 enum Role {
   USER
