@@ -2,7 +2,7 @@
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { PeopleFill, Activity, MapFill } from 'react-bootstrap-icons';
 
-const Home = () => (
+const Home = () => ( //
   <main className="py-5">
     <Container id="landing-page">
 
