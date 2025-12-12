@@ -8,9 +8,17 @@ test('test', async ({ page }) => {
   await page.locator('input[name="password"]').waitFor({ state: 'visible', timeout: 10000 });
   await page.locator('input[name="password"]').fill('changeme');
   await page.getByRole('button', { name: 'Sign in' }).click();
-  await page.goto(`${TEST_URL}/add-run`, { waitUntil: 'domcontentloaded' });
-  await page.getByRole('textbox', { name: 'Name' }).click();
-  await page.getByRole('textbox', { name: 'Name' }).fill('Morning Loop');
+  await page.waitForURL('**/');
+
+  await page.goto(`${TEST_URL}/add`, {
+    waitUntil: 'domcontentloaded',
+    timeout: 30000,
+  });
+
+  await page.locator('input[name="name"]').waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('input[name="name"]').click();
+  await page.locator('input[name="name"]').fill('Morning Loop');
+
   await page.locator('text=Select Start and End Points on Map').click();
   await page.getByRole('heading', { name: 'Add Route' }).waitFor({ state: 'visible', timeout: 10000 });
 });
